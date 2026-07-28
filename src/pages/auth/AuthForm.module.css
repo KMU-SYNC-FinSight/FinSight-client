@@ -4,11 +4,14 @@
   flex-direction: column;
 }
 
+/* TopBar 를 쓰지 않는 화면이라 안전 영역을 직접 채운다. */
 .brandBar {
   display: flex;
   align-items: center;
-  min-height: var(--topbar-h);
+  min-height: calc(var(--topbar-h) + var(--safe-top));
+  padding-top: var(--safe-top);
   padding-inline: var(--gutter);
+  background: var(--bg);
 }
 
 .form {

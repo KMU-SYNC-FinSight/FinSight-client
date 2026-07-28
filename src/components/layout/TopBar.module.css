@@ -1,3 +1,8 @@
+/*
+ * 상태바 영역까지 자기 배경으로 채운다.
+ * black-translucent 라서 콘텐츠가 상태바 아래까지 올라오므로,
+ * 높이에 --safe-top 을 더해야 노치 아래로 실제 56px 이 확보된다.
+ */
 .bar {
   position: sticky;
   top: 0;
@@ -5,7 +10,8 @@
   display: flex;
   align-items: center;
   gap: var(--sp-1);
-  min-height: var(--topbar-h);
+  min-height: calc(var(--topbar-h) + var(--safe-top));
+  padding-top: var(--safe-top);
   padding-inline: var(--sp-2);
   background: var(--bg);
 }

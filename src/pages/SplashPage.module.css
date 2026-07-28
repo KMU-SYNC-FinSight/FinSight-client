@@ -15,7 +15,13 @@
   align-items: center;
   justify-content: center;
   min-height: 100dvh;
-  padding: var(--sp-8) var(--gutter) calc(56px + env(safe-area-inset-bottom));
+  /*
+   * 노란색이 상태바까지 꽉 차야 한다.
+   * 배경은 화면 끝까지 칠하고, --safe-top 은 padding 으로만 더해
+   * 로고·문구가 노치를 피해 내려오게 한다.
+   */
+  padding: calc(var(--sp-8) + var(--safe-top)) var(--gutter)
+    calc(56px + var(--safe-bottom));
   background: var(--brand);
   overflow: hidden;
   /* 첫 페인트에서 옐로우가 부드럽게 올라온다 */
