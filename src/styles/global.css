@@ -47,6 +47,21 @@ body {
   }
 }
 
+/*
+ * 홈 화면 실행(standalone) 전용.
+ *
+ * iOS 는 apple-mobile-web-app-status-bar-style: black-translucent 일 때
+ * 상태바가 투명해지고 그 자리에 body 배경이 비친다.
+ * 앱은 항상 스플래시(/)에서 시작하므로 기본을 브랜드색으로 둬서
+ * 첫 페인트부터 노란색이 시계 자리까지 차게 한다.
+ * 화면이 바뀌면 useStatusBarColor 가 body 배경을 갈아 끼운다.
+ */
+@media (display-mode: standalone) {
+  body {
+    background: var(--brand);
+  }
+}
+
 h1,
 h2,
 h3,
