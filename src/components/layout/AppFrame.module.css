@@ -1,23 +1,27 @@
 /*
  * 모바일 웹앱 프레임.
- * 데스크톱에서 열어도 가운데 세로형 앱처럼 보이게 max-width 로 묶는다.
+ *
+ * 폰에서는 화면을 꽉 채우고, 데스크톱에서만 가운데 세로형 앱으로 묶는다.
+ *
+ * max-width 를 무조건 걸면 뷰포트가 449~479px 인 기기(일부 안드로이드·폴더블)에서
+ * 좌우에 몇 px 짜리 회색 띠만 남고 그림자는 없어서 렌더링 오류처럼 보인다.
+ * 그래서 max-width·그림자·가운데 정렬을 전부 480px 이상에서만 적용한다.
  */
 .frame {
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: var(--frame-max);
   min-height: 100dvh;
-  margin-inline: auto;
   background: var(--bg);
-  /* iOS 노치/홈바 대응 */
+  /* 노치 아래에서 콘텐츠가 시작하도록. 홈 화면 실행(standalone) 에서 의미가 있다. */
   padding-top: env(safe-area-inset-top);
 }
 
-/* 모바일에서는 프레임이 화면 전체라 그림자·테두리가 필요 없다. */
 @media (min-width: 480px) {
   .frame {
+    max-width: var(--frame-max);
+    margin-inline: auto;
     box-shadow: var(--shadow-frame);
   }
 }

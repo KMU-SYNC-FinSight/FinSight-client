@@ -18,16 +18,33 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+html {
+  /* 스크롤 체이닝이 html 까지 올라가면 홈 화면 실행 시 화면 전체가 딸려 움직인다. */
+  overscroll-behavior: none;
+  /* 폰에서는 화면 전체가 앱이므로 바깥 색이 보일 일이 없어야 한다.
+   * 여기가 회색이면 iOS 고무줄 스크롤에서 위아래로 회색이 번쩍인다. */
+  background: var(--bg);
+}
+
 body {
   font-family: var(--font-sans);
   font-size: var(--fs-body);
   line-height: var(--lh-caption);
   color: var(--ink);
-  background: var(--bg-outside);
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* 모바일 웹앱: 바운스 스크롤로 프레임이 들리는 것 방지 */
-  overscroll-behavior-y: none;
+  overscroll-behavior: none;
+  /* 길게 눌렀을 때 iOS 파란 하이라이트가 뜨지 않게 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 프레임이 가운데 놓이는 넓은 화면에서만 바깥을 회색으로 둔다. */
+@media (min-width: 480px) {
+  html,
+  body {
+    background: var(--bg-outside);
+  }
 }
 
 h1,
@@ -92,6 +109,22 @@ a {
 
 :focus:not(:focus-visible) {
   outline: none;
+}
+
+/*
+ * 홈 화면에서 실행했을 때 웹페이지가 아니라 앱처럼 느껴지게.
+ * 버튼·탭·아이콘을 길게 눌러도 iOS 의 확대경이나 "복사/공유" 메뉴가 뜨지 않는다.
+ * 본문 글자는 선택할 수 있어야 하므로 대상에서 뺀다.
+ */
+button,
+a,
+nav,
+svg,
+img,
+[role='button'] {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* ───────────────────────── 공통 유틸 ───────────────────────── */

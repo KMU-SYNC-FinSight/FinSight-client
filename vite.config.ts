@@ -41,8 +41,15 @@ export default defineConfig({
         scope: '/',
         display: 'standalone',
         orientation: 'portrait',
-        // 로고에서 실측한 브랜드 노란색. 스플래시 화면과 이어지도록 background_color 도 같게 둔다.
-        theme_color: '#FDBC03',
+        /*
+         * theme_color 는 홈 화면 실행 시 상태바 색이다.
+         * 앱 상단이 흰색(이름 + 화살표)이므로 흰색이어야 이어져 보인다.
+         * 브랜드 노란색을 넣으면 흰 헤더 위에 노란 띠만 얹혀 어긋나 보인다.
+         *
+         * background_color 는 실행 직후 스플래시 배경이다.
+         * SplashPage 가 노란 화면이라 여기는 로고 실측색을 그대로 둔다.
+         */
+        theme_color: '#FFFFFF',
         background_color: '#FDBC03',
         icons: [
           { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
