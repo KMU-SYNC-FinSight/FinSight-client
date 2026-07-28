@@ -6,15 +6,22 @@
   grid-template-columns: repeat(3, 1fr);
   background: var(--bg);
   box-shadow: var(--shadow-bar);
-  /* 홈 인디케이터 영역 확보 */
-  padding-bottom: env(safe-area-inset-bottom);
+  /*
+   * 홈 인디케이터 영역 확보. 단 인셋(iPhone 34px)을 그대로 두면 아이콘 아래에
+   * 빈 흰 띠가 남아 탭바가 필요 이상으로 두꺼워 보인다. 8px 을 되돌려
+   * 아이콘을 화면 아래쪽에 붙인다 (남는 여백 26px — 스와이프 제스처와 겹치지 않는다).
+   */
+  padding-bottom: max(0px, calc(env(safe-area-inset-bottom) - var(--sp-2)));
 }
 
 .tab {
+  /* 인디케이터의 기준 상자. tabInner 가 아래로 내려가도 인디케이터는 바 상단에 붙는다. */
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* 아이콘·라벨 묶음을 가운데가 아니라 바 아래쪽에 붙인다 */
+  justify-content: flex-end;
   gap: 3px;
   min-height: var(--tabbar-h);
   color: var(--ink-3);
@@ -42,11 +49,11 @@
 }
 
 .tabInner {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--sp-1);
   width: 100%;
-  padding-top: var(--sp-2);
+  /* 아래로 붙인 뒤 바닥과의 최소 간격만 남긴다 */
+  padding-bottom: var(--sp-2);
 }
