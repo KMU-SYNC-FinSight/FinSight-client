@@ -1,0 +1,30 @@
+/*
+ * 모바일 웹앱 프레임.
+ * 데스크톱에서 열어도 가운데 세로형 앱처럼 보이게 max-width 로 묶는다.
+ */
+.frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--frame-max);
+  min-height: 100dvh;
+  margin-inline: auto;
+  background: var(--bg);
+  /* iOS 노치/홈바 대응 */
+  padding-top: env(safe-area-inset-top);
+}
+
+/* 모바일에서는 프레임이 화면 전체라 그림자·테두리가 필요 없다. */
+@media (min-width: 480px) {
+  .frame {
+    box-shadow: var(--shadow-frame);
+  }
+}
+
+.content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}

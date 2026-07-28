@@ -1,0 +1,240 @@
+/*
+ * 서비스 사용 방법.
+ *
+ * 구조:
+ *   틴트 히어로(큰 제목 + 기관 타일 슬라이드) → 흰 본문 설명 → 하단 고정 CTA
+ */
+.page {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+/* ── 틴트 히어로 ── */
+.hero {
+  padding: var(--sp-2) 0 var(--sp-7);
+  background: var(--brand-wash);
+}
+
+.heroText {
+  padding-inline: var(--gutter);
+}
+
+.heroTitle {
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: var(--lh-display);
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  white-space: pre-line;
+}
+
+.heroSub {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--brand-ink);
+}
+
+/*
+ * ── 기관 타일이 끝없이 흐르는 띠 ──
+ *
+ * 같은 목록을 두 벌 이어 붙이고 전체를 -50% 만큼 밀면,
+ * 한 바퀴가 끝나는 순간이 처음과 똑같아서 이음매가 보이지 않는다.
+ * (한 벌만 두고 -100% 를 밀면 빈 구간이 생긴다.)
+ *
+ * 타일이 컨테이너보다 넓어야 흐름이 보인다 — 7개 × 72px + gap 12px = 576px > 408px.
+ * 개수를 줄이면 흐를 게 없어지니 주의.
+ */
+.tiles {
+  margin-top: var(--sp-6);
+  overflow: hidden;
+  /* 좌우 끝을 흐려서 잘린 타일이 갑자기 사라지는 느낌을 없앤다.
+   * 화면 끝까지 흘러가야 자연스러우므로 좌우 padding 은 주지 않는다. */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 var(--gutter),
+    #000 calc(100% - var(--gutter)),
+    transparent
+  );
+}
+
+/*
+ * 이음매 없는 흐름의 조건: translateX(-50%) 가 정확히 "한 벌"의 폭과 같아야 한다.
+ *
+ * flex 의 gap 을 쓰면 마지막 타일 뒤에는 gap 이 안 붙어서
+ * 한 벌(7×72 + 7×12 = 588) 과 전체의 절반(14×72 + 13×12 = 1164 → 582) 이 6px 어긋나고,
+ * 한 바퀴마다 그만큼 튄다.
+ * 그래서 gap 대신 타일마다 margin-right 를 줘서 모든 타일이 똑같이 84px 를 차지하게 한다.
+ *   전체 14 × 84 = 1176 → -50% = 588 = 한 벌 폭 ✓
+ *
+ * 이 요소에 padding 을 주면 translateX(-50%) 기준 폭이 달라져 다시 어긋난다. 주지 말 것.
+ */
+.tileRow {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--dur-marquee) linear infinite;
+}
+
+/* 손가락을 올리면 멈춰서 읽을 수 있게 */
+.tiles:hover .tileRow,
+.tiles:active .tileRow {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* 움직임을 줄이도록 설정했으면 흐르지 않고 직접 스크롤하게 둔다. */
+@media (prefers-reduced-motion: reduce) {
+  .tiles {
+    overflow-x: auto;
+    mask-image: none;
+  }
+
+  .tileRow {
+    animation: none;
+  }
+}
+
+/* 폭 72 + margin-right 12 = 84px. 이 합이 마퀴 계산의 기준이다. */
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+  width: 72px;
+  margin-right: var(--sp-3);
+}
+
+.tileMark {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-xl);
+  background: var(--bg);
+  box-shadow: var(--shadow-card);
+}
+
+.tileLabel {
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink-2);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ── 본문 설명 ── */
+.section {
+  padding: var(--sp-8) var(--gutter) 0;
+}
+
+.sectionKicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  margin-bottom: var(--sp-3);
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--r-pill);
+  background: var(--brand-dim);
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--brand-ink);
+}
+
+.sectionTitle {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  line-height: var(--lh-title);
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  white-space: pre-line;
+}
+
+.sectionDesc {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+}
+
+/* ── 3단계 ── */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin-top: var(--sp-5);
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+}
+
+.stepMark {
+  display: grid;
+  place-items: center;
+  width: var(--icon-tile);
+  height: var(--icon-tile);
+  flex-shrink: 0;
+  border-radius: var(--r-md);
+  background: var(--brand-wash);
+  color: var(--brand-ink);
+}
+
+.stepBody {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.stepTitle {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.stepDesc {
+  margin-top: var(--sp-1);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-body);
+  color: var(--ink-3);
+}
+
+/* ── 고지 ── */
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  margin: var(--sp-8) var(--gutter) 0;
+  padding: var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--bg-sunken);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-2);
+}
+
+.noticeIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--ink-3);
+}

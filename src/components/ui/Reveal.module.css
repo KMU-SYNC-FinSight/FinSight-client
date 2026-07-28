@@ -1,0 +1,28 @@
+/*
+ * 스크롤로 들어올 때 살짝 떠오르는 진입 효과.
+ *
+ * 화면 밖으로 나갈 때 다시 사라지게 하지는 않는다 —
+ * 읽고 있는 글이 가장자리에서 흐려지면 방해가 된다. 한 번 나타나면 그대로 둔다.
+ */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity var(--dur-reveal) var(--ease-out) var(--reveal-delay, 0ms),
+    transform var(--dur-reveal) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.reveal[data-visible='true'] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 애니메이션을 줄이도록 설정했으면 그냥 처음부터 보이게 한다. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal[data-visible='true'] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

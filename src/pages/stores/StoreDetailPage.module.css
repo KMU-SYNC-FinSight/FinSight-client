@@ -1,0 +1,101 @@
+/* ── 매장 정보 요약 ── */
+.summary {
+  padding: 0 var(--gutter) 28px;
+}
+
+.summaryHead {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+}
+
+.storeName {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: var(--lh-display);
+  letter-spacing: -0.035em;
+}
+
+.summaryMeta {
+  margin-top: var(--sp-5);
+  border-top: 1px solid var(--line);
+}
+
+.metaRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-3) 0;
+  font-size: var(--fs-body-sm);
+}
+
+.metaRow + .metaRow {
+  border-top: 1px solid var(--line);
+}
+
+.metaLabel {
+  flex-shrink: 0;
+  color: var(--ink-3);
+}
+
+.metaValue {
+  min-width: 0;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+  word-break: keep-all;
+}
+
+/* ── 바로가기 ── */
+.shortcuts {
+  padding-inline: var(--gutter);
+  border-top: 1px solid var(--line);
+}
+
+/* ── 업로드 섹션 래퍼 ── */
+.uploads {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-sunken);
+}
+
+.uploadBlock {
+  padding: var(--section-y) var(--gutter);
+}
+
+.uploadBlock + .uploadBlock {
+  border-top: 1px solid var(--line);
+}
+
+.uploadTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-section);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* 제목 아이콘을 브랜드색 타일로 감싸 섹션 구분을 또렷하게 한다. */
+.uploadTitleIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: var(--r-sm);
+  background: var(--brand);
+  color: var(--on-brand);
+}
+
+.uploadDesc {
+  margin: var(--sp-3) 0 var(--sp-5);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-relaxed);
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+}

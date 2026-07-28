@@ -1,0 +1,134 @@
+.stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  min-height: 48px;
+}
+
+/* 마커 열: 원 + 아래로 이어지는 선 */
+.marker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  width: 22px;
+}
+
+.dot {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--bg-sunken);
+  color: var(--ink-4);
+  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+  transition:
+    background-color 200ms ease-out,
+    color 200ms ease-out,
+    box-shadow 200ms ease-out;
+}
+
+/* 완료한 단계 */
+.dot[data-state='done'] {
+  background: var(--positive);
+  color: var(--on-ink);
+  box-shadow: none;
+}
+
+/* 지금 진행 중인 단계 */
+.dot[data-state='active'] {
+  background: var(--bg);
+  color: var(--info);
+  box-shadow: inset 0 0 0 2px var(--info);
+}
+
+.dot[data-state='failed'] {
+  background: var(--danger);
+  color: var(--on-ink);
+  box-shadow: none;
+}
+
+.dot[data-state='stalled'] {
+  background: var(--bg);
+  color: var(--warning);
+  box-shadow: inset 0 0 0 2px var(--warning);
+}
+
+/* 진행 중 단계에 도는 링 */
+.pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: step-spin 800ms linear infinite;
+}
+
+@keyframes step-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.connector {
+  flex: 1 1 auto;
+  width: 2px;
+  min-height: 12px;
+  margin: 2px 0;
+  background: var(--line);
+}
+
+.connector[data-state='done'] {
+  background: var(--positive);
+}
+
+.body {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-bottom: var(--sp-4);
+}
+
+.label {
+  display: block;
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink-4);
+  transition: color 200ms ease-out;
+}
+
+.label[data-state='done'],
+.label[data-state='active'],
+.label[data-state='failed'],
+.label[data-state='stalled'] {
+  color: var(--ink);
+}
+
+.desc {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--ink-3);
+}
+
+.desc[data-tone='danger'] {
+  color: var(--danger);
+  font-weight: 500;
+}
+
+.desc[data-tone='warning'] {
+  color: var(--on-warning-bg);
+  font-weight: 500;
+}

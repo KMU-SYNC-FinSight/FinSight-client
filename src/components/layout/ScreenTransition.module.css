@@ -1,0 +1,32 @@
+/*
+ * 화면 전환.
+ *
+ * 라이브러리 없이 pathname 을 key 로 준 래퍼에 진입 애니메이션만 건다.
+ * 나가는 화면을 함께 애니메이션하려면 두 화면을 동시에 마운트해야 해서
+ * (AnimatePresence 같은) 상태 관리가 필요한데, 그만한 값어치가 없다.
+ * 들어오는 화면만 부드럽게 올라와도 "화면이 바뀌었다"는 신호로 충분하다.
+ */
+.screen {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  animation: screen-in var(--dur-screen) var(--ease-out) both;
+}
+
+@keyframes screen-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen {
+    animation: none;
+  }
+}

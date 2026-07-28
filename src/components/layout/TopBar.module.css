@@ -1,0 +1,57 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  min-height: var(--topbar-h);
+  padding-inline: var(--sp-2);
+  background: var(--bg);
+}
+
+/* 옐로우 헤더가 있는 화면(매장 목록)에서는 바를 헤더에 녹인다. */
+.bar[data-tone='brand'] {
+  background: var(--brand);
+}
+
+.bar[data-bordered='true'] {
+  border-bottom: 1px solid var(--line);
+}
+
+.iconButton {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-md);
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.iconButton:active {
+  background: var(--ink-alpha-6);
+}
+
+.title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--fs-body-lg);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 뒤로가기 버튼이 없을 때 제목이 좌측 여백에 붙도록 */
+.title[data-inset='true'] {
+  padding-left: var(--sp-3);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}

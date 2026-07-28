@@ -1,0 +1,154 @@
+/* ── 상단 고지: 이 리포트의 성격을 먼저 밝힌다 ── */
+.disclaimerTop {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  margin: var(--sp-1) var(--gutter) 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--brand-wash);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  line-height: var(--lh-body);
+  color: var(--brand-ink);
+}
+
+.disclaimerIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── 점수 요약 ── */
+.scoreBlock {
+  padding: var(--sp-5) var(--gutter) var(--sp-1);
+}
+
+.summaryTable {
+  margin: var(--sp-5) var(--gutter) 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.summaryRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  font-size: var(--fs-body-sm);
+}
+
+.summaryRow + .summaryRow {
+  border-top: 1px solid var(--line);
+}
+
+.summaryLabel {
+  flex-shrink: 0;
+  color: var(--ink-3);
+}
+
+.summaryValue {
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 본문 ── */
+.section {
+  padding: var(--sp-6) var(--gutter) 0;
+}
+
+.sectionTitle {
+  font-size: var(--fs-body-lg);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.summaryText {
+  margin-top: var(--sp-3);
+  padding: var(--sp-4);
+  border-radius: var(--r-lg);
+  background: var(--bg-sunken);
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-relaxed);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* 근거 목록: 번호를 원형으로 */
+.evidenceList {
+  margin-top: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+}
+
+.evidenceItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) 0;
+}
+
+.evidenceItem + .evidenceItem {
+  border-top: 1px solid var(--line);
+}
+
+.evidenceNumber {
+  display: grid;
+  place-items: center;
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.evidenceText {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-relaxed);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.emptyText {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-3);
+}
+
+/* ── 하단 이용 안내 ── */
+.usageNotice {
+  margin: 28px var(--gutter) 0;
+  padding: var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--bg-sunken);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-2);
+  white-space: pre-line;
+}
+
+.usageNoticeTitle {
+  display: block;
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.generatedAt {
+  padding: var(--sp-4) var(--gutter) 0;
+  font-size: var(--fs-micro);
+  color: var(--ink-4);
+  text-align: center;
+}

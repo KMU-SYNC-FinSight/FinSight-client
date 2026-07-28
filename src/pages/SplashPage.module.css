@@ -1,0 +1,172 @@
+/*
+ * 브랜드 스플래시.
+ *
+ * 로고 원본이 노란 정사각형이라 화면 배경을 정확히 같은 색(--brand = 로고 실측 #FDBC03)으로 두면
+ * 로고의 배경이 화면과 이어져 마크만 떠 있는 것처럼 보인다.
+ * mix-blend-mode 는 쓰지 않는다 — multiply 는 노란색끼리 곱해져 주황으로 어두워진다.
+ *
+ * 타이밍(--splash-hold / --splash-fade)은 SplashPage.tsx 의 상수에서 주입한다.
+ */
+.page {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: var(--sp-8) var(--gutter) calc(56px + env(safe-area-inset-bottom));
+  background: var(--brand);
+  overflow: hidden;
+  /* 첫 페인트에서 옐로우가 부드럽게 올라온다 */
+  animation: page-in 460ms ease-out both;
+}
+
+/*
+ * 페이드 아웃: 노란 화면이 프레임의 흰 배경으로 녹아든다.
+ * 이동 시점이 이 애니메이션이 끝나는 때라서, 이어지는 로그인 화면(흰 배경)과 자연스럽게 연결된다.
+ */
+.page[data-exiting='true'] {
+  animation: page-out var(--splash-fade) ease-in both;
+}
+
+/*
+ * 확대는 안쪽 콘텐츠에만 준다.
+ * .page 를 scale 하면 노란 배경이 448px 앱 프레임 밖으로 삐져나온다
+ * (프레임은 내용을 잘라내지 않는다). .page 의 overflow: hidden 이 이 확대를 가둔다.
+ */
+.page[data-exiting='true'] .stack {
+  animation: stack-out var(--splash-fade) ease-in both;
+}
+
+/* 로고·워드마크·태그라인을 한 덩어리로 묶어 함께 페이드된다. */
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-5);
+}
+
+.mark {
+  width: 112px;
+  height: 112px;
+  animation: mark-in 820ms var(--ease-out) both;
+}
+
+.wordmark {
+  font-size: var(--fs-hero);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--on-brand);
+  animation: rise-in 700ms var(--ease-out) 220ms both;
+}
+
+.tagline {
+  margin-top: -8px;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  line-height: var(--lh-body);
+  letter-spacing: -0.015em;
+  color: var(--brand-ink);
+  text-align: center;
+  animation: rise-in 700ms var(--ease-out) 380ms both;
+}
+
+/* 하단 진행 표시 — 로고가 보이는 구간(--splash-hold)에 맞춰 채워진다. */
+.progress {
+  position: absolute;
+  bottom: calc(46px + env(safe-area-inset-bottom));
+  width: 46px;
+  height: 3px;
+  border-radius: var(--r-pill);
+  background: var(--ink-alpha-16);
+  overflow: hidden;
+  animation: rise-in 600ms var(--ease-out) 520ms both;
+}
+
+.progressFill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  transform-origin: left center;
+  animation: progress-grow var(--splash-hold) linear both;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes page-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* 아주 살짝 커지며 사라져 화면 뒤로 물러나는 느낌을 준다. */
+@keyframes stack-out {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes mark-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes progress-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* 애니메이션을 줄이도록 설정한 사용자에게는 정적 화면으로 보여준다.
+ * (SplashPage 는 이 경우 대기 없이 바로 다음 화면으로 넘긴다.) */
+@media (prefers-reduced-motion: reduce) {
+  .page,
+  .page[data-exiting='true'],
+  .page[data-exiting='true'] .stack,
+  .mark,
+  .wordmark,
+  .tagline,
+  .progress {
+    animation: none;
+  }
+
+  .progress {
+    display: none;
+  }
+}

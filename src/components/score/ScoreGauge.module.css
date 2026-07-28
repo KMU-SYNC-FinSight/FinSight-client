@@ -1,0 +1,133 @@
+.gauge {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin-inline: auto;
+}
+
+.gauge[data-compact='true'] {
+  max-width: 216px;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.track {
+  stroke: var(--track);
+}
+
+/* 채워지는 아크는 브랜드색으로 통일한다. 등급 구분은 아래 pill 이 담당한다. */
+.progress {
+  stroke: var(--brand);
+}
+
+.endLabel {
+  fill: var(--ink-4);
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  font-family: var(--font-sans);
+}
+
+/* ── 가운데 텍스트 오버레이 ──
+ * 캡션 + 점수 + 등급 pill 세 줄. 블록 높이 약 112px.
+ *
+ * top 56% 는 계산으로 맞춘 값이다 (300px 폭 기준, 링 안쪽 반지름 103.8px).
+ *   캡션 상단 모서리 → 중심에서 99.0px  (여유 4.8px)
+ *   점수 좌우 끝     → 90.8px          (여유 13.0px)
+ *   등급 pill 하단   → 54.9px          (여유 48.9px)
+ * 캡션 위쪽 여유가 5px 밖에 없다. 캡션 크기나 위 여백을 키우면 링을 침범하므로
+ * 이 값들을 바꿀 때는 다시 계산할 것. */
+.center {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  pointer-events: none;
+}
+
+.caption {
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  color: var(--ink-3);
+  letter-spacing: -0.01em;
+}
+
+.scoreLine {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  margin-top: var(--sp-1);
+}
+
+.score {
+  font-size: var(--fs-num-xl);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.gauge[data-compact='true'] .score {
+  font-size: var(--fs-num-lg);
+}
+
+.gauge[data-compact='true'] .caption {
+  font-size: var(--fs-micro);
+}
+
+.score[data-empty='true'] {
+  color: var(--ink-4);
+}
+
+.unit {
+  font-size: var(--fs-section);
+  font-weight: 700;
+  color: var(--ink-2);
+  letter-spacing: -0.02em;
+}
+
+/* 등급 pill — 게이지 안, 점수 바로 아래.
+ * 아크가 브랜드색으로 통일되어 등급 정보를 못 나르기 때문에
+ * 등급을 점수와 같은 시선 안에 넣어 한 번에 읽히게 한다. */
+.gradePill {
+  display: inline-flex;
+  align-items: center;
+  margin-top: var(--sp-3);
+  padding: 5px var(--sp-3);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.gauge[data-compact='true'] .gradePill {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-micro);
+}
+
+/* ── 게이지 아래 보조 영역 (위험도 + 한 줄 설명) ── */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+}
+
+.gradeCaption {
+  max-width: 300px;
+  padding-inline: var(--sp-4);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-body);
+  color: var(--ink-3);
+  text-align: center;
+}

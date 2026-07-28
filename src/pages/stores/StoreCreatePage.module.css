@@ -1,0 +1,35 @@
+.form {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.inner {
+  padding-inline: var(--gutter);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.serverError {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--danger-bg);
+  color: var(--danger);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  line-height: var(--lh-caption);
+}
+
+.serverErrorIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}

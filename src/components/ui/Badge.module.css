@@ -1,0 +1,47 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: 3px var(--sp-2);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.badge[data-tone='neutral'] {
+  background: var(--neutral-bg);
+  color: var(--ink-2);
+}
+
+.badge[data-tone='brand'] {
+  background: var(--brand-dim);
+  color: var(--brand-ink);
+}
+
+.badge[data-tone='positive'] {
+  background: var(--positive-bg);
+  color: var(--positive);
+}
+
+.badge[data-tone='info'] {
+  background: var(--info-bg);
+  color: var(--info);
+}
+
+.badge[data-tone='warning'] {
+  background: var(--warning-bg);
+  color: var(--on-warning-bg);
+}
+
+.badge[data-tone='danger'] {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.badge[data-size='lg'] {
+  padding: var(--sp-1) var(--sp-3);
+  font-size: var(--fs-caption);
+  border-radius: var(--r-pill);
+}

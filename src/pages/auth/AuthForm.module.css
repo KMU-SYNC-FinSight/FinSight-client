@@ -1,0 +1,71 @@
+.page {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.brandBar {
+  display: flex;
+  align-items: center;
+  min-height: var(--topbar-h);
+  padding-inline: var(--gutter);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  padding-inline: var(--gutter);
+}
+
+.headlineArea {
+  padding-inline: var(--gutter);
+}
+
+/* 서버가 돌려준 실패 사유 */
+.serverError {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--danger-bg);
+  color: var(--danger);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  line-height: var(--lh-caption);
+}
+
+.serverErrorIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.submitArea {
+  margin-top: var(--sp-3);
+}
+
+.altAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-7) var(--gutter) var(--sp-2);
+  font-size: var(--fs-body-sm);
+  color: var(--ink-3);
+}
+
+.altLink {
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 회원가입 화면 하단 안내 */
+.notice {
+  padding: var(--sp-1) var(--gutter) 0;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-4);
+}

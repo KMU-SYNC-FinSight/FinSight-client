@@ -1,0 +1,51 @@
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.label {
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.chip {
+  min-height: 48px;
+  padding: 0 var(--sp-5);
+  border-radius: var(--r-pill);
+  background: var(--bg-sunken);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--ink-2);
+  letter-spacing: -0.015em;
+  transition:
+    background-color 120ms ease-out,
+    color 120ms ease-out,
+    box-shadow 120ms ease-out;
+}
+
+/* 선택된 칩은 브랜드색으로 — 옐로우가 어디에 쓰이는지 일관되게 보인다. */
+.chip[aria-pressed='true'] {
+  background: var(--brand);
+  color: var(--on-brand);
+  font-weight: 700;
+}
+
+.chip:not([aria-pressed='true']):active {
+  background: var(--line);
+}
+
+.error {
+  font-size: var(--fs-caption);
+  font-weight: 500;
+  color: var(--danger);
+  min-height: 16px;
+}

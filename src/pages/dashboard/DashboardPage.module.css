@@ -1,0 +1,97 @@
+.storeSwitch {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  height: 36px;
+  padding: 0 var(--sp-4);
+  border-radius: var(--r-pill);
+  background: var(--bg-sunken);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+}
+
+.storeSwitch:active {
+  background: var(--line);
+}
+
+/* ── 게이지 블록 ── */
+.gaugeBlock {
+  padding: var(--sp-1) var(--gutter) var(--sp-7);
+}
+
+.storeName {
+  margin-bottom: var(--sp-4);
+  font-size: var(--fs-title);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-align: center;
+}
+
+/* ── 슬라이드 영역: 좌우 여백을 캐러셀이 직접 관리하므로 gutter 를 주지 않는다 ── */
+.carouselBlock {
+  padding-block: 0 var(--sp-7);
+}
+
+.carouselHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: 0 var(--gutter) var(--sp-3);
+}
+
+.carouselTitle {
+  font-size: var(--fs-section);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.carouselHint {
+  flex-shrink: 0;
+  font-size: var(--fs-caption);
+  color: var(--ink-4);
+}
+
+/* ── 지표 영역 ── */
+.metrics {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--section-y) var(--gutter);
+  background: var(--bg-sunken);
+  border-top: 1px solid var(--line);
+}
+
+.metricsTitle {
+  font-size: var(--fs-section);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.reportLink {
+  padding-inline: var(--gutter);
+}
+
+/* 리포트가 없을 때 캐러셀 자리에 놓는 안내 */
+.carouselFallback {
+  margin: 0 var(--gutter);
+  padding: var(--sp-5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-relaxed);
+  letter-spacing: -0.01em;
+  color: var(--ink-3);
+}
+
+.inlineLink {
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

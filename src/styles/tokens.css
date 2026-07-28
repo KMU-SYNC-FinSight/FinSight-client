@@ -1,0 +1,171 @@
+/*
+ * FinSight 디자인 토큰
+ *
+ * 레이아웃·타이포 리듬은 토스처럼 여백을 넉넉히 쓰고 제목을 크게,
+ * 색은 KB 계열(로고 노란색 + 차콜)로 간다.
+ *
+ * ── 규율 ──────────────────────────────────────
+ * 1. CSS 에 색·글자크기·간격을 하드코딩하지 않는다. 전부 여기 변수를 쓴다.
+ * 2. 길이 값은 4px 그리드에 붙인다. 스케일에 없는 값이 필요하면
+ *    "왜 필요한지" 먼저 의심할 것 — 대개는 스케일 중 하나로 충분하다.
+ * 3. 글자 크기는 아래 7단계 + 숫자 3단계가 전부다. 12.5px 같은 값은 만들지 않는다.
+ *    (0.5px 차이는 아무도 못 알아보지만, 화면마다 다르면 리듬이 어긋나 보인다.)
+ *
+ * 잉크 램프는 toss.im 에서 실측한 뉴트럴 계단이다. 대비를 확인하고 고른 값이니 임의로 바꾸지 말 것.
+ */
+
+:root {
+  /* ══ 브랜드 ══
+   * public/logo.png 에서 실측한 값. 스플래시·헤더가 이 값에 의존하므로 임의로 바꾸지 않는다. */
+  --brand: #fdbc03;
+  --brand-strong: #e8ab00; /* 눌림 */
+  --brand-dim: #ffe9ae; /* 뱃지 배경 */
+  --brand-wash: #fff8e6; /* 아이콘 타일 등 아주 연한 배경 */
+  /* 옐로우 계열 배경 위 보조 텍스트.
+   * #7A5600 은 --brand 위에서 3.92:1 로 AA 미달이라 한 단계 더 어둡게 잡았다.
+   * (--brand 5.09:1 / --brand-wash 8.16:1 / --brand-dim 7.21:1) */
+  --brand-ink: #654600;
+  /* 옐로우 카드 안에서 쓰는 반투명 흰 면 */
+  --on-brand-veil: rgba(255, 255, 255, 0.45);
+
+  /* ══ 잉크 (toss.im 실측 뉴트럴 램프) ══
+   * 괄호 안은 흰 배경 대비. --ink-3 는 예전 #8B919C(3.17:1, AA 미달) 대체값이다. */
+  --ink: #191f28; /* 제목           16.6:1 AAA */
+  --ink-pressed: #0f131a; /* 기본 버튼 눌림 */
+  --ink-2: #4e5968; /* 본문 보조       7.1:1 AAA */
+  --ink-3: #6b7684; /* 캡션          4.6:1 AA  */
+  --ink-4: #8b95a1; /* 보조·비활성     3.0:1 (큰 글씨 전용) */
+  --ink-5: #b0b8c1; /* 플레이스홀더 (장식용, 본문 금지) */
+  --on-ink: #ffffff;
+  --on-brand: #191f28; /* 옐로우 위 텍스트은 항상 다크 (흰 글씨는 1.7:1 로 안 읽힌다) */
+
+  /* ══ 배경 / 선 ══ */
+  --bg: #ffffff;
+  --bg-sunken: #f2f4f6;
+  --bg-outside: #e5e8eb; /* 데스크톱에서 앱 프레임 바깥 */
+  --line: #e5e8eb;
+  --line-strong: #d1d6db;
+  --track: #eaedf0; /* 게이지·프로그레스 트랙 */
+
+  /* ══ 상태 ══ */
+  --positive: #0b8a5b;
+  --positive-bg: #e7f5ef;
+  --info: #1b64da;
+  --info-bg: #e9f1fd;
+  --warning: #ef6c1f; /* 브랜드 옐로우와 혼동되지 않도록 오렌지 */
+  --warning-bg: #fdeee4;
+  --on-warning-bg: #c1400d; /* 연한 주황 위 텍스트 */
+  --danger: #d93025;
+  --danger-bg: #fdecea;
+  --neutral: #8b95a1;
+  --neutral-bg: #f1f3f5;
+
+  /* ══ 등급색 ══
+   * 게이지 아크는 브랜드색으로 통일하고, 등급 구분은 라벨 pill 이 담당한다.
+   * 옐로우가 주색이라 CAUTION 에 옐로우를 쓰면 브랜드색과 구분이 안 되므로 오렌지를 쓴다. */
+  --grade-very-stable: var(--positive);
+  --grade-stable: var(--info);
+  --grade-caution: var(--warning);
+  --grade-risk: var(--danger);
+  --grade-unknown: var(--neutral);
+
+  /* ══ 반투명 잉크 ══ */
+  --ink-alpha-6: rgba(25, 31, 40, 0.06);
+  --ink-alpha-16: rgba(25, 31, 40, 0.16);
+  --ink-alpha-18: rgba(25, 31, 40, 0.18);
+
+  /* ══════════════ 타이포 ══════════════
+   * 7단계. 이 밖의 크기는 쓰지 않는다.
+   * toss.im 실측 본문이 15px/400/line-height 20px 이었고 --fs-body 가 여기에 맞춰져 있다. */
+  --fs-display: 26px; /* 화면 제목 */
+  --fs-title: 20px; /* 큰 섹션 제목 */
+  --fs-section: 17px; /* 섹션·카드 제목 */
+  --fs-body-lg: 16px; /* 버튼·입력 */
+  --fs-body: 15px; /* 본문 */
+  --fs-body-sm: 14px; /* 보조 본문 */
+  --fs-caption: 13px; /* 캡션·라벨 */
+  --fs-micro: 12px; /* 최소 크기. 이보다 작게 쓰지 않는다 */
+  --fs-hero: 32px; /* 스플래시 워드마크 전용 */
+
+  --lh-display: 1.36;
+  --lh-title: 1.4;
+  --lh-section: 1.45;
+  --lh-body: 1.6;
+  --lh-caption: 1.5;
+  --lh-tight: 1.2; /* 숫자·단문 */
+
+  /* 자간 — 한글은 큰 글씨일수록 좁혀야 뭉치지 않는다 */
+  --ls-display: -0.035em;
+  --ls-title: -0.03em;
+  --ls-section: -0.02em;
+  --ls-body: -0.01em;
+
+  /* 숫자 전용 (지표·점수) */
+  --fs-num-xl: 48px; /* 게이지 점수 */
+  --fs-num-lg: 36px; /* 게이지 축소판 */
+  --fs-num-md: 20px; /* 지표 값 */
+
+  /* 입력 필드는 16px 미만이면 iOS 에서 포커스 시 화면이 확대된다. 내리지 말 것. */
+  --fs-input: var(--fs-body-lg);
+
+  /* 가중치 — 제목은 700 까지만. toss.im 실측 분포가 400 → 600 → 700 이고 800 은 없다.
+   * 한글은 800 에서 획이 뭉갠다. 예외는 게이지 숫자와 아바타 이니셜뿐. */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard', 'Malgun Gothic',
+    'Noto Sans KR', 'Segoe UI', Roboto, sans-serif;
+
+  /* ══════════════ 간격 (4px 그리드) ══════════════ */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 32px;
+  --sp-8: 40px;
+  --sp-9: 48px;
+
+  --gutter: var(--sp-5); /* 화면 좌우 기본 여백 */
+  --page-top: var(--sp-6); /* TopBar 아래 본문 시작 여백 */
+  --section-y: var(--sp-7); /* 섹션 위아래 여백 */
+
+  /* ══ 높이 (전부 4의 배수) ══ */
+  --topbar-h: 56px;
+  --tabbar-h: 60px;
+  --control-lg: 56px; /* 기본 버튼·입력 */
+  --control-md: 48px;
+  --control-sm: 40px;
+  --row-h: 64px; /* 리스트 행 */
+  --icon-tile: 40px;
+
+  /* ══ 반경 ══ (toss.im 실측 7/15/22/50 참고) */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 24px;
+  --r-pill: 999px;
+
+  /* ══ 그림자 (절제) ══ */
+  --shadow-card: 0 1px 2px rgba(25, 31, 40, 0.04), 0 2px 10px rgba(25, 31, 40, 0.04);
+  --shadow-raised: 0 2px 6px rgba(25, 31, 40, 0.06), 0 8px 24px rgba(25, 31, 40, 0.07);
+  --shadow-bar: 0 -1px 0 var(--line);
+  --shadow-frame: 0 0 0 1px rgba(25, 31, 40, 0.05), 0 8px 40px rgba(25, 31, 40, 0.08);
+
+  /* ══ 앱 프레임 ══ */
+  --frame-max: 448px;
+
+  /* ══ 모션 ══
+   * toss.im 에서 실측된 duration 은 100ms / 200ms 뿐이었다 (easing 은 추출 실패). */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-screen: 240ms; /* 화면 전환 */
+  --dur-reveal: 520ms; /* 스크롤 진입 */
+  --dur-gauge: 900ms;
+  --dur-marquee: 26s; /* 기관 타일 흐름 한 바퀴 */
+}

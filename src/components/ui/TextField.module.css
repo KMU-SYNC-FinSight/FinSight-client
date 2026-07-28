@@ -1,0 +1,106 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.label {
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+}
+
+.inputWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  min-height: 56px;
+  padding: 0 var(--sp-4);
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  /* 토스식: 기본 상태는 회색 면, 포커스에서 흰 면 + 진한 테두리로 올라온다. */
+  background: var(--bg-sunken);
+  font-size: var(--fs-input); /* 16px 미만이면 iOS 에서 포커스 시 화면이 확대된다 */
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  transition:
+    border-color 120ms ease-out,
+    background-color 120ms ease-out;
+}
+
+.input::placeholder {
+  color: var(--ink-4);
+}
+
+.input:focus {
+  outline: none;
+  background: var(--bg);
+  border-color: var(--ink);
+}
+
+.input[data-invalid='true'] {
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+
+.input[data-invalid='true']:focus {
+  background: var(--bg);
+  border-color: var(--danger);
+}
+
+.input:disabled {
+  background: var(--bg-sunken);
+  color: var(--ink-3);
+}
+
+/* 우측 액션(비밀번호 보기 등)이 있을 때 텍스트가 겹치지 않도록 */
+.input[data-has-suffix='true'] {
+  padding-right: 64px;
+}
+
+.suffix {
+  position: absolute;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  height: 40px;
+  padding-inline: var(--sp-3);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.suffix:active {
+  background: var(--bg-sunken);
+}
+
+.footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  min-height: 16px;
+}
+
+.error {
+  font-size: var(--fs-caption);
+  font-weight: 500;
+  color: var(--danger);
+}
+
+.hint {
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+}
+
+.counter {
+  flex-shrink: 0;
+  font-size: var(--fs-caption);
+  color: var(--ink-4);
+}

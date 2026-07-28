@@ -1,0 +1,125 @@
+/*
+ * 내용 모양에 맞춘 로딩 표시.
+ *
+ * 스피너 하나만 돌리면 화면이 비어 보이고 로딩이 끝나는 순간 레이아웃이 튄다.
+ * 들어올 자리를 미리 잡아두면 체감 대기 시간이 짧아지고 점프도 없다.
+ */
+
+.bar {
+  display: block;
+  background: var(--bg-sunken);
+  border-radius: var(--r-sm);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.circle {
+  display: block;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--bg-sunken);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+/* 여러 개가 동시에 깜빡이면 산만하다. 순서대로 살짝 밀어준다. */
+.bar:nth-child(2),
+.circle:nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.bar:nth-child(3),
+.circle:nth-child(3) {
+  animation-delay: 180ms;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ── 매장 슬라이드 카드 ── */
+.storeCardWrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding-inline: var(--gutter);
+}
+
+.storeCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+}
+
+.storeCardHead {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.storeCardScore {
+  width: 128px;
+  height: 36px;
+  margin-top: var(--sp-3);
+  border-radius: var(--r-sm);
+  background: var(--bg-sunken);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.storeCardActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+}
+
+/* ── 대시보드 ── */
+.gaugeBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--gutter) var(--sp-7);
+}
+
+/*
+ * 게이지 자리. 실제 게이지가 220° 반원이라 위쪽만 둥근 모양으로 흉내낸다.
+ * 정확한 도형까지 갈 필요는 없고 자리와 비율만 맞으면 된다.
+ */
+.gaugeShape {
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 240 / 158;
+  border-radius: var(--r-lg);
+  background: var(--bg-sunken);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.cardBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-6) var(--gutter);
+  background: var(--bg-sunken);
+  border-top: 1px solid var(--line);
+}
+
+.card {
+  padding: var(--sp-5);
+  border-radius: var(--r-lg);
+  background: var(--bg);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+  margin-top: var(--sp-4);
+}

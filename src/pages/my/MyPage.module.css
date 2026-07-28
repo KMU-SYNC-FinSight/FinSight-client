@@ -1,0 +1,108 @@
+/* 프로필 블록이 헤더에 붙지 않도록 위 여백을 넉넉히 준다 (--page-top 위에 추가). */
+.header {
+  padding: var(--sp-2) var(--gutter) 28px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: var(--r-lg);
+  background: var(--brand);
+  color: var(--on-brand);
+  font-size: var(--fs-display);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.profileBody {
+  min-width: 0;
+}
+
+.name {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.email {
+  margin-top: var(--sp-1);
+  font-size: var(--fs-body-sm);
+  color: var(--ink-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── 계정 정보 ── */
+.sectionLabel {
+  padding: 0 var(--gutter) var(--sp-3);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink-3);
+}
+
+.infoTable {
+  margin: 0 var(--gutter);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  min-height: 52px;
+  padding: var(--sp-3) var(--sp-5);
+  font-size: var(--fs-body);
+}
+
+.infoRow + .infoRow {
+  border-top: 1px solid var(--line);
+}
+
+.infoLabel {
+  flex-shrink: 0;
+  color: var(--ink-3);
+}
+
+.infoValue {
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+  word-break: break-all;
+}
+
+.links {
+  margin-top: var(--sp-5);
+  padding-inline: var(--gutter);
+}
+
+.actions {
+  margin-top: var(--sp-5);
+  padding: var(--sp-7) var(--gutter) 0;
+  border-top: 1px solid var(--line);
+}
+
+.appMeta {
+  padding: var(--sp-6) var(--gutter) 0;
+  font-size: var(--fs-micro);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-4);
+  text-align: center;
+}

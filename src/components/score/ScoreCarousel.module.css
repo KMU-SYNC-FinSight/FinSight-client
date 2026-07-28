@@ -1,0 +1,111 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+/* 가로 스크롤 + 스냅. 라이브러리 없이 터치 스와이프가 네이티브로 동작한다.
+ *
+ * 한 장이 화면 폭을 꽉 채우고, 넘기는 동안에만 다음 카드가 따라 들어온다.
+ *
+ * 폭 계산 주의:
+ * flex-basis 의 백분율은 flex 컨테이너의 **content box** 기준으로 풀린다.
+ * .track 에 padding-inline: G 가 있으므로 content box 는 이미 (W - 2G) 다.
+ * 따라서 카드 폭은 그냥 100% 여야 한다.
+ * calc(100% - 2G) 로 쓰면 좌우 여백을 두 번 빼서 카드가 40px 좁아진다(이전 버그).
+ *
+ * 이렇게 두면 스냅된 카드가 [G, W-G] 를 차지하고
+ * 다음 카드의 왼쪽 끝이 G + (W-2G) + gap(G) = W, 즉 정확히 오른쪽 경계에 온다. */
+.track {
+  display: flex;
+  gap: var(--gutter);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-inline: var(--gutter);
+  scroll-padding-inline: var(--gutter);
+}
+
+.card {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  padding: var(--sp-5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--bg);
+}
+
+.cardLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink-3);
+}
+
+.cardIndex {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-sunken);
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 첫 카드(종합 의견)는 브랜드색으로 강조 */
+.card[data-kind='summary'] .cardIndex {
+  background: var(--brand);
+  color: var(--on-brand);
+}
+
+.card[data-kind='summary'] .cardLabel {
+  color: var(--brand-ink);
+}
+
+.cardText {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  /* 카드마다 글 길이가 달라도 높이가 튀지 않게 최소 줄 수를 확보한다 */
+  min-height: 5.1em;
+}
+
+/* ── 도트 인디케이터 ── */
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--line-strong);
+  transition:
+    width 180ms var(--ease-out),
+    background-color 180ms ease-out;
+}
+
+.dot[aria-current='true'] {
+  width: 18px;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+}
+
+/* 도트 자체 터치 영역은 넉넉하게 */
+.dotButton {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 24px;
+}

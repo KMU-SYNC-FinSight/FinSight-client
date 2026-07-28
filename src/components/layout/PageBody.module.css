@@ -1,0 +1,66 @@
+/*
+ * 화면 본문.
+ * TopBar 바로 아래에서 시작하면 헤더에 붙어 보이므로 --page-top 만큼 띄운다.
+ */
+.body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-top: var(--page-top);
+  padding-bottom: var(--sp-7);
+}
+
+.body[data-gutter='true'] {
+  padding-inline: var(--gutter);
+}
+
+/* 자체 헤더(옐로우 영역 등)를 가진 화면은 위 여백을 직접 관리한다. */
+.body[data-flush='true'] {
+  padding-top: 0;
+}
+
+/* 하단에 고정 CTA 가 있는 화면은 본문 아래 여백을 줄인다 (푸터가 대신 채운다). */
+.body[data-cta='true'] {
+  padding-bottom: var(--sp-4);
+}
+
+/* ── 하단 고정 액션 영역 ── */
+.footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--gutter) calc(var(--sp-4) + env(safe-area-inset-bottom));
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+}
+
+.footer[data-with-tabbar='true'] {
+  padding-bottom: var(--sp-3);
+  bottom: 0;
+}
+
+/* ── 큰 제목 헤드라인 (토스식) ── */
+.headline {
+  padding: var(--sp-1) 0 var(--sp-7);
+}
+
+.headlineTitle {
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: var(--lh-display);
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  white-space: pre-line;
+}
+
+.headlineDesc {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: -0.01em;
+  color: var(--ink-3);
+}
