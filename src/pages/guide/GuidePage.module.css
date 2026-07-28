@@ -201,11 +201,14 @@
 }
 
 .stepBody {
+  display: block;
   flex: 1 1 auto;
   min-width: 0;
 }
 
+/* span 은 기본이 inline 이라 display: block 이 없으면 제목과 설명이 한 줄에 붙는다. */
 .stepTitle {
+  display: block;
   font-size: var(--fs-body);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -213,6 +216,7 @@
 }
 
 .stepDesc {
+  display: block;
   margin-top: var(--sp-1);
   font-size: var(--fs-caption);
   line-height: var(--lh-body);

@@ -136,7 +136,7 @@ export function GuidePage() {
 
         <Reveal>
           <section className={styles.section}>
-            <h3 className={styles.sectionTitle}>어떻게 만들어지나요</h3>
+            <h3 className={styles.sectionTitle}>어떻게 만들어지나요?</h3>
             <ol className={styles.steps}>
               {/* Reveal 은 div 를 그리므로 ol 의 직계 자식이 되면 안 된다 (li 만 허용).
                   li 안쪽에 두고 스텝 스타일을 그 아래 div 로 옮겼다. */}

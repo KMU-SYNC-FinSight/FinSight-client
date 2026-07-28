@@ -1,6 +1,7 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePrefersReducedMotion } from '@/hooks/useAnimatedNumber'
+import { isStandalone } from '@/hooks/useStatusBarColor'
 import { PATHS } from '@/routes/paths'
 import { useAuthStore } from '@/store/authStore'
 import styles from './SplashPage.module.css'
@@ -46,6 +47,29 @@ export function SplashPage() {
       clearTimeout(navTimer)
     }
   }, [navigate, destination, reducedMotion])
+
+  /*
+   * 상태바(= body 배경)를 콘텐츠와 같은 속도로 함께 녹인다.
+   *
+   * 그냥 두면 콘텐츠는 HOLD_MS 부터 FADE_OUT_MS 동안 서서히 사라지는데,
+   * body 배경은 라우터가 이동하는 SPLASH_MS 에 한 번에 바뀐다.
+   * 위(상태바)와 아래(화면)가 FADE_OUT_MS 만큼 어긋나 깨져 보인다.
+   */
+  useEffect(() => {
+    // 브라우저에서는 body 를 건드리면 안 된다 — 프레임 바깥 회색이 사라진다.
+    if (!exiting || !isStandalone()) return
+
+    const { body } = document
+    const previousTransition = body.style.transition
+    const next = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()
+
+    body.style.transition = `background-color ${FADE_OUT_MS}ms ease-in`
+    body.style.backgroundColor = next
+
+    return () => {
+      body.style.transition = previousTransition
+    }
+  }, [exiting])
 
   return (
     <div

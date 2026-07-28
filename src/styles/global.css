@@ -59,6 +59,8 @@ body {
 @media (display-mode: standalone) {
   body {
     background: var(--brand);
+    /* 화면이 바뀔 때 상태바 색이 툭 튀지 않게. 스플래시 퇴장은 자기 길이(520ms)로 덮어쓴다. */
+    transition: background-color var(--dur-screen) var(--ease-out);
   }
 }
 

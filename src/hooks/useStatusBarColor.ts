@@ -6,7 +6,14 @@ function isIosStandalone(): boolean {
   return (navigator as Navigator & { standalone?: boolean }).standalone === true
 }
 
-function isStandalone(): boolean {
+/**
+ * 홈 화면에서 실행 중인지.
+ *
+ * body 배경을 직접 건드리는 코드는 반드시 이걸로 감싸야 한다.
+ * 브라우저에서는 480px 이상일 때 body 가 프레임 바깥 회색(--bg-outside)이어야 하는데,
+ * 인라인 스타일로 덮으면 스타일시트를 이겨서 그 회색이 사라진다.
+ */
+export function isStandalone(): boolean {
   return window.matchMedia('(display-mode: standalone)').matches || isIosStandalone()
 }
 
