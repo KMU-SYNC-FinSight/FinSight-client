@@ -9,7 +9,15 @@
     <!-- 상태바 색. 앱 상단이 흰색이라 흰색으로 맞춘다 (manifest 의 theme_color 와 동일). -->
     <meta name="theme-color" content="#FFFFFF" />
     <meta name="description" content="소상공인 매장 운영 데이터 분석 및 운영 안정성 지표 서비스" />
+    <!-- 표준 이름. apple- 접두사 버전은 deprecated 되어 Chrome 이 경고를 낸다. -->
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!--
+      default: 상태바를 iOS 가 그리고 콘텐츠는 그 아래에서 시작한다. 글자는 검정이라 잘 읽힌다.
+      black-translucent 로 바꾸면 콘텐츠가 상태바 아래까지 올라가지만
+      상태바 글자가 흰색으로 고정되어, 상단이 흰색인 이 앱에서는 시계·배터리가 안 보인다.
+      틈은 theme-color 를 화면마다 맞추는 것으로 해결했다 (useStatusBarColor).
+    -->
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="FinSight" />
     <link rel="icon" type="image/png" href="/favicon.png" />

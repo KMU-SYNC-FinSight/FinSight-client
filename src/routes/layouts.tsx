@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { AppFrame } from '@/components/layout/AppFrame'
 import { BottomTabBar } from '@/components/layout/BottomTabBar'
 import { ScreenTransition } from '@/components/layout/ScreenTransition'
+import { useStatusBarColor } from '@/hooks/useStatusBarColor'
 
 /** 화면을 이동하면 스크롤을 맨 위로 되돌린다 (SPA 기본 동작이 아니다). */
 function useScrollReset() {
@@ -15,6 +16,8 @@ function useScrollReset() {
 /** 모든 화면을 감싸는 앱 프레임. */
 export function RootLayout() {
   useScrollReset()
+  // 홈 화면 실행 시 상태바 색을 화면 상단 색과 맞춰 띠가 생기지 않게 한다.
+  useStatusBarColor()
   return (
     <AppFrame>
       <Outlet />
