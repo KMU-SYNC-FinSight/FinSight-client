@@ -78,6 +78,51 @@
   text-underline-offset: 3px;
 }
 
+/* ── 업로드 전 미리보기 ── */
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.previewVideo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-md);
+  /* 세로 영상이 들어와도 레터박스가 영상 프레임처럼 보이게 어두운 바탕을 깐다. */
+  background: var(--ink);
+  object-fit: contain;
+}
+
+.previewMeta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  font-size: var(--fs-micro);
+  line-height: var(--lh-caption);
+  color: var(--ink-3);
+}
+
+.previewFallback {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--warning-bg);
+  color: var(--on-warning-bg);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  line-height: var(--lh-caption);
+}
+
+.previewFallbackIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
 /* ── 전송 진행률 ── */
 .progress {
   display: flex;

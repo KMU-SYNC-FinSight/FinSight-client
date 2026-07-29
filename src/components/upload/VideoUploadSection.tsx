@@ -8,6 +8,7 @@ import { queryKeys } from '@/hooks/queries'
 import { useUploadPolling } from '@/hooks/useUploadPolling'
 import { FilePickField, UploadProgress } from './FilePickField'
 import { UploadStepper } from './UploadStepper'
+import { VideoPreview } from './VideoPreview'
 import styles from './UploadPanel.module.css'
 
 /** 영상 파일 상한. 서버 제한을 모르지만 브라우저에서 미리 막아 헛된 전송을 줄인다. */
@@ -70,6 +71,9 @@ export function VideoUploadSection({ storeId }: { storeId: number }) {
             onSelect={handleSelect}
             disabled={isTransferring}
           />
+
+          {/* 고른 영상을 보내기 전에 확인한다. 전송 중에도 남겨 무엇을 올리는지 보이게 한다. */}
+          {file && <VideoPreview file={file} />}
 
           {isTransferring && percent > 0 && <UploadProgress percent={percent} />}
 

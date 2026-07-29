@@ -154,6 +154,12 @@ axios 는 2xx 를 성공으로 보므로 문제없지만, 상태 코드를 직�
 - `FAILED` 응답은 **어느 단계에서 실패했는지 알려주지 않는다.**
   `UploadStepper` 가 도달했던 마지막 단계를 기억해 그 자리에 실패를 표시한다.
 
+영상은 보내기 전에 **로컬 미리보기**로 확인시킨다 (`VideoPreview`).
+`URL.createObjectURL` 로 브라우저에서 바로 재생하고 파일이 바뀌면 이전 URL 을 반드시 `revoke` 한다
+(수백 MB blob 이 탭에 쌓인다). 분석 불가 영상이 `FAILED` 없이 `UPLOADED` 에 머물러
+5분을 버리는 경로가 실제로 있으므로, 여기서 한 번 걸러내는 값이 크다.
+브라우저가 디코딩하지 못하면(HEVC 등) 재생만 실패하고 업로드는 막지 않는다 — 서버는 처리할 수도 있다.
+
 멀티파트 업로드 시 `Content-Type` 을 **직접 지정하지 않는다.**
 `FormData` 만 넘기면 axios 가 boundary 를 포함해 설정한다. 직접 쓰면 boundary 가 빠져 서버 파싱이 깨진다.
 
@@ -612,7 +618,7 @@ src/
 │  ├─ layout/    AppFrame · TopBar · BottomTabBar · PageBody
 │  ├─ ui/        Button · TextField · ChipSelect · Surface(Card/Section/ListRow) · Badge · States · Toast
 │  ├─ score/     ScoreGauge · ScoreCarousel
-│  ├─ upload/    FilePickField · UploadStepper · CsvResultCard · Video/SalesUploadSection
+│  ├─ upload/    FilePickField · VideoPreview · UploadStepper · CsvResultCard · Video/SalesUploadSection
 │  ├─ dashboard/ MetricGrid
 │  ├─ icons/     인라인 SVG 아이콘
 │  └─ brand/     Wordmark
