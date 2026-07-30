@@ -1,0 +1,91 @@
+.intro {
+  padding-bottom: var(--sp-5);
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  color: var(--ink-2);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.row {
+  display: grid;
+  /* 라벨 → 배점 막대 → 점수. 막대만 남는 폭을 먹는다. */
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.label {
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  letter-spacing: var(--ls-body);
+  color: var(--ink);
+}
+
+/* 막대는 배점 비교용이다. 가장 큰 배점(25점)이 꽉 찬 상태. */
+.bar {
+  min-width: var(--sp-6);
+  height: var(--sp-2);
+  border-radius: var(--r-pill);
+  background: var(--track);
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--brand);
+}
+
+.weight {
+  min-width: var(--sp-8);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  letter-spacing: var(--ls-body);
+  color: var(--ink-2);
+  text-align: right;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-body);
+  font-weight: 700;
+  letter-spacing: var(--ls-body);
+  color: var(--ink);
+}
+
+.note {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-5);
+  padding: var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--bg-sunken);
+}
+
+.noteIcon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  /* 첫 줄 글자 높이에 맞춰 아이콘을 올린다 */
+  height: calc(var(--fs-caption) * var(--lh-body));
+  color: var(--ink-3);
+}
+
+.noteBody {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  color: var(--ink-2);
+}

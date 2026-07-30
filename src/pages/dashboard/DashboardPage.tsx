@@ -1,7 +1,15 @@
+import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { API_CODES, isApiCode, toApiError } from '@/api/client'
 import type { DashboardResponse } from '@/api/types'
-import { DocumentIcon, StoreIcon, SwapIcon, TableIcon, UserIcon } from '@/components/icons'
+import {
+  DocumentIcon,
+  HelpIcon,
+  StoreIcon,
+  SwapIcon,
+  TableIcon,
+  UserIcon,
+} from '@/components/icons'
 import { PageBody } from '@/components/layout/PageBody'
 import { TopBar } from '@/components/layout/TopBar'
 import { Badge } from '@/components/ui/Badge'
@@ -10,6 +18,7 @@ import { ErrorState } from '@/components/ui/States'
 import { ListRow } from '@/components/ui/Surface'
 import { MetricCard, type Metric } from '@/components/dashboard/MetricGrid'
 import { ScoreCarousel } from '@/components/score/ScoreCarousel'
+import { ScoreFormulaSheet } from '@/components/score/ScoreFormulaSheet'
 import { ScoreGauge } from '@/components/score/ScoreGauge'
 import { useDashboard, useReport } from '@/hooks/queries'
 import {
@@ -146,6 +155,7 @@ function ScoreExplanation({
   error: unknown
   storeId: number
 }) {
+  const [formulaOpen, setFormulaOpen] = useState(false)
   const slides = buildSlides(summary ?? undefined, evidence ?? undefined)
 
   // 점수 산출 전에는 리포트가 404 SCORE_NOT_READY 로 온다.
@@ -156,11 +166,24 @@ function ScoreExplanation({
   return (
     <section className={styles.carouselBlock}>
       <div className={styles.carouselHead}>
-        <h2 className={styles.carouselTitle}>이 점수는 이렇게 나왔어요</h2>
+        <div className={styles.carouselTitleGroup}>
+          <h2 className={styles.carouselTitle}>이 점수는 이렇게 나왔어요</h2>
+          {/* 배점표는 상시 노출하지 않는다 — 필요할 때만 시트로 열어 본다 */}
+          <button
+            type="button"
+            className={styles.helpButton}
+            onClick={() => setFormulaOpen(true)}
+            aria-label="점수 산출 방식 보기"
+          >
+            <HelpIcon size={18} strokeWidth={1.9} />
+          </button>
+        </div>
         {!isPending && !error && slides.length > 1 && (
           <span className={styles.carouselHint}>옆으로 넘겨보세요</span>
         )}
       </div>
+
+      <ScoreFormulaSheet open={formulaOpen} onClose={() => setFormulaOpen(false)} />
 
       {isPending && <p className={styles.carouselFallback}>점수 설명을 불러오는 중입니다.</p>}
 

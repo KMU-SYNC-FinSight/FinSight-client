@@ -21,6 +21,7 @@ import {
   FileSpreadsheet,
   FileText,
   Gauge,
+  HelpCircle,
   Info,
   Landmark,
   LogOut,
@@ -77,6 +78,7 @@ export const UploadIcon = adapt(Upload)
 export const CheckIcon = adapt(Check)
 export const AlertIcon = adapt(AlertCircle)
 export const InfoIcon = adapt(Info)
+export const HelpIcon = adapt(HelpCircle)
 export const DocumentIcon = adapt(FileText)
 export const SwapIcon = adapt(ArrowLeftRight)
 export const LogoutIcon = adapt(LogOut)

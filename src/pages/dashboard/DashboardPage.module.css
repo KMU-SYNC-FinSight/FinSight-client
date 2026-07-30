@@ -43,11 +43,37 @@
   padding: 0 var(--gutter) var(--sp-3);
 }
 
+/* 제목 + 물음표 버튼. 오른쪽 힌트와 떨어져 있도록 한 묶음으로 둔다. */
+.carouselTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+
 .carouselTitle {
   font-size: var(--fs-section);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--ink);
+}
+
+/* 점수 산출 방식 시트를 여는 버튼. 제목 옆이라 시각 무게를 낮춘다. */
+.helpButton {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  /* 아이콘은 18px 이지만 터치 영역은 32px 확보 */
+  width: 32px;
+  height: 32px;
+  margin-left: -2px;
+  border-radius: var(--r-pill);
+  color: var(--ink-4);
+}
+
+.helpButton:active {
+  background: var(--bg-sunken);
+  color: var(--ink-2);
 }
 
 .carouselHint {
