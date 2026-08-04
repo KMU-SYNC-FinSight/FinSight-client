@@ -40,8 +40,12 @@
  * 확대는 안쪽 콘텐츠에만 준다.
  * .page 를 scale 하면 노란 배경이 448px 앱 프레임 밖으로 삐져나온다
  * (프레임은 내용을 잘라내지 않는다). .page 의 overflow: hidden 이 이 확대를 가둔다.
+ *
+ * 하단 진행 바도 **같은 애니메이션·같은 길이**로 함께 물러난다.
+ * 본문만 뒤로 물러나고 바는 제자리에서 사라지면 두 속도가 달라 보인다.
  */
-.page[data-exiting='true'] .stack {
+.page[data-exiting='true'] .stack,
+.page[data-exiting='true'] .progress {
   animation: stack-out var(--splash-fade) ease-in both;
 }
 
@@ -78,7 +82,13 @@
   animation: rise-in 700ms var(--ease-out) 380ms both;
 }
 
-/* 하단 진행 표시 — 로고가 보이는 구간(--splash-hold)에 맞춰 채워진다. */
+/*
+ * 하단 진행 표시 — 로고가 보이는 구간(--splash-hold)에 맞춰 채워진다.
+ *
+ * 등장 길이는 본문 문구(.wordmark / .tagline)와 **같은 700ms** 다.
+ * 순서만 늦게(520ms) 올라오고 속도는 같아야 한 화면처럼 읽힌다 —
+ * 길이가 다르면 아래쪽만 따로 움직이는 것처럼 보인다.
+ */
 .progress {
   position: absolute;
   bottom: calc(46px + env(safe-area-inset-bottom));
@@ -87,7 +97,7 @@
   border-radius: var(--r-pill);
   background: var(--ink-alpha-16);
   overflow: hidden;
-  animation: rise-in 600ms var(--ease-out) 520ms both;
+  animation: rise-in 700ms var(--ease-out) 520ms both;
 }
 
 .progressFill {
@@ -165,6 +175,7 @@
   .page,
   .page[data-exiting='true'],
   .page[data-exiting='true'] .stack,
+  .page[data-exiting='true'] .progress,
   .mark,
   .wordmark,
   .tagline,

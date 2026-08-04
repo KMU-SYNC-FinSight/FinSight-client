@@ -78,6 +78,132 @@
   text-underline-offset: 3px;
 }
 
+/* ── 촬영 일시 (날짜 + 시) ──
+ * 파일 선택 카드 바로 아래에 놓이므로 같은 반경·같은 회색 면을 쓰고,
+ * 내용은 앱의 리스트 행(라벨 ─ 값 ›) 리듬을 따른다. */
+.when {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.whenLabel {
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+}
+
+.whenCard {
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--bg-sunken);
+  /* 행 구분선이 카드 반경 밖으로 삐져나오지 않게 */
+  overflow: hidden;
+}
+
+.whenCard[data-invalid='true'] {
+  border-color: var(--danger);
+  background: var(--danger-bg);
+}
+
+.whenCard[data-disabled='true'] {
+  opacity: 0.6;
+}
+
+.whenRow {
+  /* 투명 input 을 덮기 위한 기준 상자 */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  min-height: var(--control-md);
+  padding: 0 var(--sp-4);
+}
+
+.whenRow + .whenRow {
+  border-top: 1px solid var(--line);
+}
+
+/*
+ * 누른 행은 **배경만** 흰색으로 올라온다. TextField 의 포커스 처리와 같은 언어다.
+ *
+ * 링(테두리)을 쓰지 않는 이유: 카드가 overflow: hidden 이라 첫·마지막 행의
+ * 네모난 링이 카드의 둥근 모서리에 잘려 보인다. 배경은 같은 클리핑에도
+ * 모서리를 따라 깔끔하게 잘린다.
+ */
+.whenRow:focus-within {
+  background: var(--bg);
+}
+
+.whenRowLabel {
+  font-size: var(--fs-body-sm);
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+}
+
+.whenValue {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.whenValue[data-empty='true'] {
+  font-weight: 500;
+  color: var(--ink-4);
+}
+
+.whenChevron {
+  display: grid;
+  place-items: center;
+  color: var(--ink-4);
+}
+
+/*
+ * 행을 덮는 native input / select.
+ * 값 표시는 우리가 그리므로 위젯 자체는 숨기고 탭 영역으로만 쓴다.
+ * 글자 크기를 16px 로 두는 이유는 iOS 확대 방지 (--fs-input).
+ */
+.whenInput {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: var(--fs-input);
+  opacity: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.whenInput:disabled {
+  cursor: not-allowed;
+}
+
+.whenHint {
+  font-size: var(--fs-micro);
+  line-height: var(--lh-body);
+  color: var(--ink-4);
+}
+
+.whenError {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  line-height: var(--lh-body);
+  color: var(--danger);
+}
+
 /* ── 업로드 전 미리보기 ── */
 .preview {
   display: flex;

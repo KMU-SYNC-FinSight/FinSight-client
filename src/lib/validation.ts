@@ -69,3 +69,17 @@ export function validateOpenedAt(value: string): string | null {
   if (Number.isNaN(date.getTime())) return '개업일 형식이 올바르지 않습니다.'
   return null
 }
+
+/**
+ * 영상 촬영 일시. api-docs.json 에서 `recordedAt` 이 **필수** 쿼리 파라미터라 빈 값을 막는다.
+ * 미래 시각은 서버가 거부하지 않을 수도 있지만, 아직 찍지 않은 영상은 있을 수 없으므로
+ * 잘못 고른 날짜가 지표에 섞이기 전에 여기서 걸러낸다.
+ */
+export function validateRecordedAt(value: string): string | null {
+  if (!value) return '영상 촬영 일시를 입력해 주세요.'
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return '촬영 일시 형식이 올바르지 않습니다.'
+  // 기기 시계 오차를 감안해 1분은 허용한다.
+  if (date.getTime() > Date.now() + 60_000) return '촬영 일시가 현재보다 미래입니다.'
+  return null
+}

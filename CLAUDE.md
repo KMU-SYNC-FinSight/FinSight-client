@@ -138,9 +138,33 @@ axios 는 2xx 를 성공으로 보므로 문제없지만, 상태 코드를 직�
 | | 영상 `POST /api/stores/{id}/videos` | 매출 CSV `POST /api/stores/{id}/sales` |
 |---|---|---|
 | 응답 | `VideoUploadResponse` | `SalesUploadResponse` |
+| 파일 밖 파라미터 | **`recordedAt` 쿼리 (필수)** | 없음 |
 | `processingStatus` | 있음 | **없음** |
 | 즉시 알 수 있는 것 | 접수 여부만 | `totalRows` / `insertedRows` / `updatedRows` / `skippedRows` |
 | 화면 처리 | 폴링 단계 표시만 | 행 요약 카드를 먼저 띄우고 폴링도 병행 |
+
+#### 영상의 `recordedAt` 은 **오프셋 없는 로컬 일시**다
+
+`?recordedAt=2026-07-15T14:00:00` — 폼 본문이 아니라 **쿼리 파라미터**이고 필수다.
+`Z` 나 `+09:00` 을 붙이지 않는다. 그래서 `toISOString()` 을 쓰면 안 된다 —
+한국에서 9시간이 밀려 엉뚱한 시각으로 기록된다.
+변환은 `src/lib/datetime.ts` 한 곳에 모았다 (`toRecordedAtValue` / `toApiDateTime` 등).
+
+**입력은 1시간 단위다.** 화면이 다루는 값은 `YYYY-MM-DDTHH:00`,
+전송할 때 `toApiDateTime()` 이 초를 채운다. 분을 묻지 않는 이유는 사장님이 모르는 값을
+억지로 채우게 되고 분석도 시간대 단위로 쓰기 때문이다.
+
+그래서 `RecordedAtField` 는 datetime-local 한 칸이 아니라 **날짜 + 시(0~23) 두 칸**이다 —
+datetime-local 은 `step` 을 줘도 브라우저마다 분 칸을 그대로 보여준다.
+행 위에 투명한 native `input`/`select` 를 덮어 어디를 눌러도 OS 피커가 열리고,
+값 표시는 직접 그린다. 누른 행은 `.whenRow:focus-within` 으로 **배경만 흰색**이 된다
+(`TextField` 포커스와 같은 언어). **테두리 링을 쓰지 않는다** —
+카드가 `overflow: hidden` 이라 첫·마지막 행의 네모난 링이 둥근 모서리에 잘려 보인다.
+
+값은 파일을 고르면 `file.lastModified` 로 프리필하되 **사용자가 고칠 수 있게 둔다** —
+복사·편집된 파일은 수정 시각이 촬영 시각과 다르다.
+미래는 두 겹으로 막는다: 날짜가 오늘이면 시 목록을 현재 시까지만 만들고(`maxHourOf`),
+그래도 남으면 `validateRecordedAt()` 이 잡는다 (기기 시계 오차 1분은 허용).
 
 공통 규약 (`src/hooks/useUploadPolling.ts`):
 

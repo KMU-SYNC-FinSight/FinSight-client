@@ -6,7 +6,10 @@ import { AlertIcon, VideoIcon } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
 import { queryKeys } from '@/hooks/queries'
 import { useUploadPolling } from '@/hooks/useUploadPolling'
+import { toApiDateTime, toRecordedAtValue } from '@/lib/datetime'
+import { validateRecordedAt } from '@/lib/validation'
 import { FilePickField, UploadProgress } from './FilePickField'
+import { RecordedAtField } from './RecordedAtField'
 import { UploadStepper } from './UploadStepper'
 import { VideoPreview } from './VideoPreview'
 import styles from './UploadPanel.module.css'
@@ -17,6 +20,8 @@ const MAX_VIDEO_BYTES = 500 * 1024 * 1024
 export function VideoUploadSection({ storeId }: { storeId: number }) {
   const queryClient = useQueryClient()
   const [file, setFile] = useState<File | null>(null)
+  const [recordedAt, setRecordedAt] = useState('')
+  const [recordedAtTouched, setRecordedAtTouched] = useState(false)
   const [percent, setPercent] = useState(0)
   const [uploadId, setUploadId] = useState<number | null>(null)
   const [sizeError, setSizeError] = useState<string | null>(null)
@@ -24,7 +29,8 @@ export function VideoUploadSection({ storeId }: { storeId: number }) {
   const polling = useUploadPolling(uploadId)
 
   const mutation = useMutation({
-    mutationFn: (target: File) => uploadVideo(storeId, target, setPercent),
+    mutationFn: (input: { file: File; recordedAt: string }) =>
+      uploadVideo(storeId, input.file, toApiDateTime(input.recordedAt), setPercent),
     onSuccess: (res) => {
       setUploadId(res.uploadId)
     },
@@ -45,10 +51,17 @@ export function VideoUploadSection({ storeId }: { storeId: number }) {
       return
     }
     setFile(selected)
+    // 파일 수정 시각을 촬영 일시 기본값으로 채운다. 대개 촬영 시각과 같고,
+    // 아니면 사용자가 고쳐야 하므로 직접 고른 값은 덮어쓰지 않는다.
+    if (selected && !recordedAtTouched) {
+      setRecordedAt(toRecordedAtValue(new Date(selected.lastModified)))
+    }
   }
 
   const reset = () => {
     setFile(null)
+    setRecordedAt('')
+    setRecordedAtTouched(false)
     setPercent(0)
     setUploadId(null)
     mutation.reset()
@@ -57,6 +70,13 @@ export function VideoUploadSection({ storeId }: { storeId: number }) {
   const uploadError = mutation.isError ? toApiError(mutation.error).message : null
   const isTransferring = mutation.isPending
   const hasStarted = uploadId !== null
+
+  // 서버가 recordedAt 을 필수로 요구하므로 값이 맞을 때만 전송한다.
+  const recordedAtError = validateRecordedAt(recordedAt)
+  const canSubmit = Boolean(file) && recordedAtError === null
+  // 아직 아무것도 안 한 빈 칸에 빨간 테두리를 씌우지 않는다. 단 파일에서 채운 값이
+  // 틀렸을 때는(예: 기기 시계가 앞선 파일) 손대지 않아도 이유를 보여줘야 한다.
+  const showRecordedAtError = recordedAtTouched || (Boolean(file) && recordedAt !== '')
 
   return (
     <div className={styles.panel}>
@@ -75,6 +95,17 @@ export function VideoUploadSection({ storeId }: { storeId: number }) {
           {/* 고른 영상을 보내기 전에 확인한다. 전송 중에도 남겨 무엇을 올리는지 보이게 한다. */}
           {file && <VideoPreview file={file} />}
 
+          {/* recordedAt 은 필수 쿼리 파라미터다. 파일에서 채운 기본값도 틀릴 수 있어 확인시킨다. */}
+          <RecordedAtField
+            value={recordedAt}
+            disabled={isTransferring}
+            error={showRecordedAtError ? recordedAtError : null}
+            onChange={(next) => {
+              setRecordedAtTouched(true)
+              setRecordedAt(next)
+            }}
+          />
+
           {isTransferring && percent > 0 && <UploadProgress percent={percent} />}
 
           {(sizeError || uploadError) && (
@@ -88,9 +119,11 @@ export function VideoUploadSection({ storeId }: { storeId: number }) {
 
           <Button
             size="md"
-            disabled={!file}
+            disabled={!canSubmit}
             loading={isTransferring}
-            onClick={() => file && mutation.mutate(file)}
+            onClick={() => {
+              if (file && canSubmit) mutation.mutate({ file, recordedAt })
+            }}
           >
             업로드하고 분석 시작
           </Button>
