@@ -48,6 +48,53 @@
   margin-top: var(--sp-3);
 }
 
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin: var(--sp-7) var(--gutter) 0;
+  color: var(--ink-4);
+  font-size: var(--fs-caption);
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--line);
+}
+
+.kakaoArea {
+  padding-inline: var(--gutter);
+  margin-top: var(--sp-5);
+}
+
+/*
+ * 카카오 로그인 버튼. 카카오 디자인 가이드가 배경·글자색을 고정값으로 요구해
+ * 이 버튼에 한해 앱 토큰(--brand) 대신 카카오 지정 색을 그대로 쓴다.
+ */
+.kakaoButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  width: 100%;
+  min-height: 56px;
+  padding-inline: var(--sp-5);
+  border-radius: var(--r-md);
+  background: #fee500;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: var(--fs-body-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  transition: background-color 120ms ease-out;
+}
+
+.kakaoButton:active {
+  background: #f5da00;
+}
+
 .altAction {
   display: flex;
   align-items: center;

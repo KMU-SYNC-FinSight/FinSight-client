@@ -44,7 +44,7 @@ for (const instance of [api, uploadApi]) {
  * (여기서 직접 라우팅하지 않는 이유: 인터셉터는 라우터 밖이고,
  *  location 을 강제로 바꾸면 리다이렉트 후 복귀 경로가 사라진다.)
  */
-const AUTH_FREE_PATHS = ['/api/auth/login', '/api/auth/signup']
+const AUTH_FREE_PATHS = ['/api/auth/login', '/api/auth/signup', '/api/auth/kakao']
 
 for (const instance of [api, uploadApi]) {
   instance.interceptors.response.use(

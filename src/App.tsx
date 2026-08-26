@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ToastProvider } from '@/components/ui/Toast'
 import { LoginPage } from '@/pages/auth/LoginPage'
 import { SignupPage } from '@/pages/auth/SignupPage'
+import { KakaoCallbackPage } from '@/pages/auth/KakaoCallbackPage'
 import { DashboardEntryPage } from '@/pages/dashboard/DashboardEntryPage'
 import { DashboardPage } from '@/pages/dashboard/DashboardPage'
 import { GuidePage } from '@/pages/guide/GuidePage'
@@ -51,6 +52,8 @@ export function App() {
 
             {/* 앱 진입점. 브랜드 스플래시를 잠깐 보여준 뒤 세션에 따라 분기한다. */}
             <Route path="/" element={<SplashPage />} />
+            {/* 카카오 인가 서버가 돌아오는 경로. 지나가는 화면이라 탭바·전환 없이 둔다. */}
+            <Route path={PATHS.kakaoCallback} element={<KakaoCallbackPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>

@@ -10,6 +10,8 @@
 export const PATHS = {
   login: '/login',
   signup: '/signup',
+  /** 카카오 인가 서버가 로그인 후 돌아오는 경로 */
+  kakaoCallback: '/login/oauth2/code/kakao',
 
   stores: '/stores',
   storeNew: '/stores/new',

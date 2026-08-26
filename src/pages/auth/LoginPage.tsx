@@ -9,6 +9,7 @@ import { Headline, PageBody } from '@/components/layout/PageBody'
 import { Button } from '@/components/ui/Button'
 import { TextField, usePasswordToggle } from '@/components/ui/TextField'
 import { useToast } from '@/components/ui/Toast'
+import { getKakaoAuthorizeUrl } from '@/lib/kakao'
 import { validateEmail, validateLoginPassword } from '@/lib/validation'
 import { PATHS } from '@/routes/paths'
 import { useAuthStore } from '@/store/authStore'
@@ -19,6 +20,23 @@ interface LoginLocationState {
   from?: string
   /** 회원가입 직후 넘어온 이메일 (다시 입력하지 않게 채워 준다) */
   email?: string
+  /** 카카오 로그인 콜백이 실패했을 때 담아 보내는 사유 */
+  authError?: string
+}
+
+/**
+ * 카카오 브랜드 가이드가 요구하는 고정 색·심볼.
+ * 앱 자체 토큰(--brand)과 다르며, 로그인 버튼 여기 한 곳에서만 쓴다.
+ */
+function KakaoIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        fill="currentColor"
+        d="M12 3C6.48 3 2 6.58 2 11c0 2.85 1.85 5.36 4.63 6.79-.2.75-.73 2.75-.84 3.18-.13.53.19.52.4.38.17-.11 2.68-1.82 3.76-2.56.66.1 1.34.15 2.05.15 5.52 0 10-3.58 10-8s-4.48-8-10-8Z"
+      />
+    </svg>
+  )
 }
 
 export function LoginPage() {
@@ -54,7 +72,11 @@ export function LoginPage() {
     mutation.mutate({ email: email.trim(), password })
   }
 
-  const serverError = mutation.isError ? toApiError(mutation.error).message : null
+  const serverError = mutation.isError ? toApiError(mutation.error).message : state.authError
+
+  const handleKakaoLogin = () => {
+    window.location.href = getKakaoAuthorizeUrl()
+  }
 
   return (
     <div className={styles.page}>
@@ -110,6 +132,17 @@ export function LoginPage() {
             </Button>
           </div>
         </form>
+
+        <div className={styles.divider}>
+          <span>또는</span>
+        </div>
+
+        <div className={styles.kakaoArea}>
+          <button type="button" className={styles.kakaoButton} onClick={handleKakaoLogin}>
+            <KakaoIcon />
+            카카오로 로그인
+          </button>
+        </div>
 
         <p className={styles.altAction}>
           아직 계정이 없으신가요?

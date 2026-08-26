@@ -6,6 +6,7 @@ export const ENDPOINTS = {
   auth: {
     signup: '/api/auth/signup',
     login: '/api/auth/login',
+    kakao: '/api/auth/kakao',
   },
   users: {
     me: '/api/users/me',

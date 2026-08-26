@@ -67,6 +67,12 @@ export interface LoginResponse {
   role: UserRole
 }
 
+/** 카카오 인가 코드 로그인 요청. 응답은 LoginResponse 와 동일한 모양이다. */
+export interface KakaoLoginRequest {
+  /** 카카오 인가 서버가 리다이렉트로 준 code 쿼리 파라미터 값 */
+  code: string
+}
+
 /* ───────────────────────── User ───────────────────────── */
 
 export interface UserMeResponse {
