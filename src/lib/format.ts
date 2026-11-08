@@ -69,7 +69,7 @@ const BUSINESS_TYPE_LABELS: Record<BusinessType, string> = {
   CAFE: '카페',
   RESTAURANT: '음식점',
   BAKERY: '베이커리',
-  RETAIL: '소매',
+  RETAIL: '소매점',
   ETC: '기타',
 }
 

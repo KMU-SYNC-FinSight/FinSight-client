@@ -87,15 +87,15 @@ export function SplashPage() {
         <img className={styles.mark} src="/logo.png" alt="" width={112} height={112} />
         <p className={styles.wordmark}>FinSight</p>
         <p className={styles.tagline}>
-          매장 운영 데이터로
+          매장 데이터로
           <br />
-          오늘의 안정성을 봅니다
+          운영 안정성을 확인해요
         </p>
       </div>
       <span className={styles.progress} aria-hidden="true">
         <span className={styles.progressFill} />
       </span>
-      <span className="sr-only">FinSight 를 시작합니다</span>
+      <span className="sr-only">FinSight를 시작해요</span>
     </div>
   )
 }

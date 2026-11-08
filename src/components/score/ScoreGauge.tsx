@@ -82,7 +82,7 @@ export function ScoreGauge({
           aria-label={
             scored
               ? `운영 안정성 점수 ${target.toFixed(1)}점, 등급 ${meta.label}`
-              : '운영 안정성 점수를 계산할 데이터가 부족합니다'
+              : '운영 안정성 점수를 계산할 데이터가 부족해요'
           }
         >
           {/* 배경 트랙 */}

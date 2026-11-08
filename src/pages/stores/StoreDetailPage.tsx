@@ -25,7 +25,7 @@ export function StoreDetailPage() {
       <>
         <TopBar title="매장" back backTo={PATHS.stores} bordered />
         <PageBody>
-          <ErrorState title="잘못된 주소입니다" message="매장 정보를 찾을 수 없습니다." />
+          <ErrorState title="주소가 잘못됐어요" message="매장 정보를 찾지 못했어요" />
         </PageBody>
       </>
     )
@@ -36,17 +36,21 @@ export function StoreDetailPage() {
       <TopBar title="매장 상세" back backTo={PATHS.stores} bordered />
 
       <PageBody>
-        {isPending && <LoadingState label="매장 정보를 불러오는 중" />}
+        {isPending && <LoadingState label="매장 정보를 불러오고 있어요" />}
 
         {isError &&
           // 남의 매장이나 없는 매장은 404 STORE_NOT_FOUND 로 온다. 장애가 아니므로 안내로 처리한다.
           (toApiError(error).code === API_CODES.STORE_NOT_FOUND ? (
             <ErrorState
-              title="매장을 찾을 수 없습니다"
-              message="삭제되었거나 접근 권한이 없는 매장입니다."
+              title="매장을 찾지 못했어요"
+              message="없어졌거나 볼 권한이 없는 매장이에요"
             />
           ) : (
-            <ErrorState message={toApiError(error).message} onRetry={() => refetch()} />
+            <ErrorState
+              title="매장 정보를 불러오지 못했어요"
+              message={toApiError(error).message}
+              onRetry={() => refetch()}
+            />
           ))}
 
         {store && (
@@ -80,14 +84,14 @@ export function StoreDetailPage() {
             <nav className={styles.shortcuts}>
               <ListRow
                 icon={<ChartIcon size={19} strokeWidth={1.8} />}
-                title="운영 대시보드"
-                description="운영 안정성 점수와 방문객·매출 지표"
+                title="대시보드"
+                description="운영 점수와 방문객·매출 보기"
                 to={PATHS.dashboardOf(store.storeId)}
               />
               <ListRow
                 icon={<DocumentIcon size={19} strokeWidth={1.8} />}
                 title="금융기관용 리포트"
-                description="운영 안정성 보조지표 요약과 근거"
+                description="금융기관에 보여줄 점수와 근거"
                 to={PATHS.report(store.storeId)}
               />
             </nav>
@@ -98,11 +102,10 @@ export function StoreDetailPage() {
                   <span className={styles.uploadTitleIcon}>
                     <VideoIcon size={18} strokeWidth={1.9} />
                   </span>
-                  매장 영상 업로드
+                  매장 영상 올리기
                 </h3>
                 <p className={styles.uploadDesc}>
-                  매장 내부 영상을 올리면 방문객 수와 체류 시간을 분석합니다. 분석에는 시간이 걸리며
-                  진행 상태를 단계로 보여드립니다.
+                  매장 안을 찍은 영상을 올리면 방문객 수와 머문 시간을 분석해요
                 </p>
                 <VideoUploadSection storeId={store.storeId} />
               </section>
@@ -112,11 +115,10 @@ export function StoreDetailPage() {
                   <span className={styles.uploadTitleIcon}>
                     <TableIcon size={18} strokeWidth={1.9} />
                   </span>
-                  매출 CSV 업로드
+                  매출 파일 올리기
                 </h3>
                 <p className={styles.uploadDesc}>
-                  일자별 매출 데이터를 올리면 매출 지표와 객단가를 계산합니다. 같은 날짜의 데이터는
-                  최신 값으로 덮어씁니다.
+                  날짜별 매출 CSV를 올리면 매출 흐름과 방문객당 매출을 계산해요
                 </p>
                 <SalesUploadSection storeId={store.storeId} />
               </section>

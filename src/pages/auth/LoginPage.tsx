@@ -58,7 +58,7 @@ export function LoginPage() {
     mutationFn: login,
     onSuccess: (res) => {
       setSession(res)
-      toast.show(`${res.name}님, 환영합니다`)
+      toast.show(`${res.name}님, 반가워요`)
       navigate(state.from ?? PATHS.stores, { replace: true })
     },
   })
@@ -87,8 +87,7 @@ export function LoginPage() {
       <PageBody>
         <div className={styles.headlineArea}>
           <Headline
-            title={'사장님, 안녕하세요.\n오늘 매장을 확인해 보세요.'}
-            description="가입한 이메일로 로그인하세요."
+            title={'사장님, 안녕하세요\n오늘 매장 상태를 확인해 보세요'}
           />
         </div>
 
@@ -119,7 +118,7 @@ export function LoginPage() {
             label="비밀번호"
             type={passwordType}
             autoComplete="current-password"
-            placeholder="비밀번호를 입력하세요"
+            placeholder="비밀번호 입력"
             value={password}
             error={passwordError}
             suffix={toggle}
@@ -140,12 +139,12 @@ export function LoginPage() {
         <div className={styles.kakaoArea}>
           <button type="button" className={styles.kakaoButton} onClick={handleKakaoLogin}>
             <KakaoIcon />
-            카카오로 로그인
+            카카오 로그인
           </button>
         </div>
 
         <p className={styles.altAction}>
-          아직 계정이 없으신가요?
+          아직 계정이 없나요?
           <Link to={PATHS.signup} className={styles.altLink}>
             회원가입
           </Link>

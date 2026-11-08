@@ -7,9 +7,9 @@ type StepState = 'pending' | 'active' | 'done' | 'failed' | 'stalled'
 
 /** openapi.json 의 ProcessingStatus 진행 순서. FAILED 는 단계가 아니라 결과다. */
 const STEPS = [
-  { status: 'UPLOADED' as const, label: '업로드 접수', desc: '파일이 서버에 등록되었습니다.' },
-  { status: 'PROCESSING' as const, label: '데이터 분석', desc: '영상·매출 데이터를 분석하고 있습니다.' },
-  { status: 'COMPLETED' as const, label: '분석 완료', desc: '대시보드에서 결과를 확인할 수 있습니다.' },
+  { status: 'UPLOADED' as const, label: '파일 접수', desc: '파일을 잘 받았어요' },
+  { status: 'PROCESSING' as const, label: '데이터 분석', desc: '데이터를 분석하고 있어요' },
+  { status: 'COMPLETED' as const, label: '분석 완료', desc: '대시보드에서 결과를 확인해 보세요' },
 ]
 
 const STEP_INDEX: Record<string, number> = { UPLOADED: 0, PROCESSING: 1, COMPLETED: 2 }
@@ -19,6 +19,8 @@ interface UploadStepperProps {
   isFailed: boolean
   isTimedOut: boolean
   errorMessage?: string | null
+  /** 5분 상한을 넘겼을 때 안내. 업로드 종류마다 할 수 있는 일이 달라 밖에서 받는다. */
+  stalledMessage?: string
 }
 
 /**
@@ -27,7 +29,13 @@ interface UploadStepperProps {
  * FAILED 응답은 어느 단계에서 실패했는지 알려주지 않는다.
  * 그래서 여기까지 도달했던 가장 마지막 단계를 기억해 그 자리에 실패를 표시한다.
  */
-export function UploadStepper({ status, isFailed, isTimedOut, errorMessage }: UploadStepperProps) {
+export function UploadStepper({
+  status,
+  isFailed,
+  isTimedOut,
+  errorMessage,
+  stalledMessage = '분석이 늦어지고 있어요. 잠시 후 이 화면을 다시 열어 확인해 주세요.',
+}: UploadStepperProps) {
   const furthestRef = useRef(0)
 
   const currentIndex = status && status in STEP_INDEX ? STEP_INDEX[status] : -1
@@ -65,10 +73,10 @@ export function UploadStepper({ status, isFailed, isTimedOut, errorMessage }: Up
         let tone: 'default' | 'danger' | 'warning' = 'default'
 
         if (state === 'failed') {
-          desc = errorMessage || '처리 중 오류가 발생했습니다.'
+          desc = errorMessage || '분석하지 못했어요. 파일을 확인하고 다시 올려 주세요.'
           tone = 'danger'
         } else if (state === 'stalled') {
-          desc = '처리가 지연되고 있습니다. 잠시 후 화면을 새로 열어 확인해 주세요.'
+          desc = stalledMessage
           tone = 'warning'
         } else if (state === 'pending') {
           desc = ''

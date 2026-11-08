@@ -81,7 +81,7 @@ export function useUploadPolling(uploadId: number | null): UploadPollingResult {
 
   let errorMessage: string | null = null
   if (isFailed) {
-    errorMessage = query.data?.errorMessage?.trim() || '처리 중 오류가 발생했습니다.'
+    errorMessage = query.data?.errorMessage?.trim() || '분석하지 못했어요. 파일을 확인하고 다시 올려 주세요.'
   } else if (query.isError) {
     errorMessage = toApiError(query.error).message
   }

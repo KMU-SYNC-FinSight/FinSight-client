@@ -48,7 +48,7 @@ export function DashboardPage() {
       <>
         <TopBar title="대시보드" bordered />
         <PageBody>
-          <ErrorState title="잘못된 주소입니다" message="매장 정보를 찾을 수 없습니다." />
+          <ErrorState title="주소가 잘못됐어요" message="매장 정보를 찾지 못했어요" />
         </PageBody>
       </>
     )
@@ -59,7 +59,7 @@ export function DashboardPage() {
   return (
     <>
       <TopBar
-        title="운영 대시보드"
+        title="대시보드"
         bordered
         actions={
           <button
@@ -68,7 +68,7 @@ export function DashboardPage() {
             onClick={() => navigate(PATHS.stores)}
           >
             <SwapIcon size={15} strokeWidth={2} />
-            매장 변경
+            매장 바꾸기
           </button>
         }
       />
@@ -78,6 +78,7 @@ export function DashboardPage() {
 
         {dashboard.isError && (
           <ErrorState
+            title="대시보드를 불러오지 못했어요"
             message={toApiError(dashboard.error).message}
             onRetry={() => dashboard.refetch()}
           />
@@ -103,19 +104,19 @@ export function DashboardPage() {
             />
 
             <div className={styles.metrics}>
-              <h2 className={styles.metricsTitle}>방문객 · 매출 지표</h2>
+              <h2 className={styles.metricsTitle}>방문객과 매출</h2>
 
               <MetricCard
                 title="방문객"
                 icon={<UserIcon size={17} strokeWidth={1.9} />}
-                emptyNotice="아직 분석된 방문객 데이터가 없습니다. 매장 영상을 업로드하면 방문객 지표가 채워집니다."
+                emptyNotice="매장 영상을 올리면 방문객 지표를 보여드려요"
                 metrics={visitorMetrics(data)}
               />
 
               <MetricCard
                 title="매출"
                 icon={<TableIcon size={17} strokeWidth={1.9} />}
-                emptyNotice="아직 등록된 매출 데이터가 없습니다. 매출 CSV를 업로드하면 매출 지표가 채워집니다."
+                emptyNotice="매출 파일을 올리면 매출 지표를 보여드려요"
                 metrics={salesMetrics(data)}
               />
             </div>
@@ -124,13 +125,13 @@ export function DashboardPage() {
               <ListRow
                 icon={<DocumentIcon size={19} strokeWidth={1.8} />}
                 title="금융기관용 리포트"
-                description="운영 안정성 보조지표 요약과 근거"
+                description="금융기관에 보여줄 점수와 근거"
                 to={PATHS.report(storeId)}
               />
               <ListRow
                 icon={<StoreIcon size={19} strokeWidth={1.8} />}
-                title="데이터 업로드"
-                description="영상 · 매출 CSV 추가하기"
+                title="데이터 올리기"
+                description="영상이나 매출 파일 추가"
                 to={PATHS.storeDetail(storeId)}
               />
             </nav>
@@ -173,40 +174,38 @@ function ScoreExplanation({
             type="button"
             className={styles.helpButton}
             onClick={() => setFormulaOpen(true)}
-            aria-label="점수 산출 방식 보기"
+            aria-label="점수 계산 방법 보기"
           >
             <HelpIcon size={18} strokeWidth={1.9} />
           </button>
         </div>
         {!isPending && !error && slides.length > 1 && (
-          <span className={styles.carouselHint}>옆으로 넘겨보세요</span>
+          <span className={styles.carouselHint}>옆으로 넘겨 보세요</span>
         )}
       </div>
 
       <ScoreFormulaSheet open={formulaOpen} onClose={() => setFormulaOpen(false)} />
 
-      {isPending && <p className={styles.carouselFallback}>점수 설명을 불러오는 중입니다.</p>}
+      {isPending && <p className={styles.carouselFallback}>점수 설명을 불러오고 있어요</p>}
 
       {!isPending && notReady && (
         <p className={styles.carouselFallback}>
-          아직 점수를 산출할 데이터가 부족합니다.{' '}
           <Link to={PATHS.storeDetail(storeId)} className={styles.inlineLink}>
-            영상·매출 데이터를 업로드
-          </Link>
-          하면 점수와 근거가 이곳에 표시됩니다.
+            영상이나 매출 파일을 올리면
+          </Link>{' '}
+          점수와 그 이유를 여기서 보여드려요
         </p>
       )}
 
       {!isPending && realError && (
         <p className={styles.carouselFallback}>
-          점수 설명을 불러오지 못했습니다. 지표는 아래에서 확인할 수 있습니다.
+          점수 설명을 불러오지 못했어요. 지표는 아래에서 볼 수 있어요.
         </p>
       )}
 
       {!isPending && !error && slides.length === 0 && (
         <p className={styles.carouselFallback}>
-          점수를 설명할 근거가 아직 없습니다. 영상과 매출 데이터를 업로드하면 분석 결과가 이곳에
-          표시됩니다.
+          아직 점수의 근거가 없어요. 영상이나 매출 파일을 올리면 여기서 보여드려요.
         </p>
       )}
 
@@ -218,14 +217,14 @@ function ScoreExplanation({
 function visitorMetrics(data: DashboardResponse): Metric[] {
   const v = data.visitorMetrics
   return [
-    { label: '평균 체류 인원', value: formatPeople(v?.averageOccupancy) },
+    { label: '평균 동시 인원', value: formatPeople(v?.averageOccupancy) },
     { label: '최대 동시 인원', value: formatPeople(v?.peakOccupancy) },
     {
-      label: '분석된 방문객',
+      label: '방문객 수',
       value: v?.trackedObjectCount !== undefined ? `${formatNumber(v.trackedObjectCount)}명` : '—',
-      note: '영상에서 추적된 객체 수',
+      note: '영상에서 센 사람 수',
     },
-    { label: '평균 체류 시간', value: formatDuration(v?.averageDwellSeconds) },
+    { label: '평균 머문 시간', value: formatDuration(v?.averageDwellSeconds) },
     {
       label: '혼잡도',
       value: congestionLabel(v?.congestionLevel),
@@ -244,15 +243,15 @@ function visitorMetrics(data: DashboardResponse): Metric[] {
 function salesMetrics(data: DashboardResponse): Metric[] {
   const s = data.salesMetrics
   return [
-    { label: '매출액', value: formatCurrency(s?.salesAmount), full: true },
+    { label: '총 매출', value: formatCurrency(s?.salesAmount), full: true },
     {
-      label: '거래 건수',
+      label: '결제 건수',
       value: s?.transactionCount !== undefined ? `${formatNumber(s.transactionCount)}건` : '—',
     },
     {
       label: '방문객당 매출',
       value: formatCurrency(s?.salesPerTrackedObject),
-      note: '매출액 ÷ 분석된 방문객',
+      note: '총 매출 ÷ 방문객 수',
     },
   ]
 }

@@ -34,7 +34,7 @@ export function ReportPage() {
       <>
         <TopBar title="리포트" back backTo={PATHS.stores} bordered />
         <PageBody>
-          <ErrorState title="잘못된 주소입니다" message="매장 정보를 찾을 수 없습니다." />
+          <ErrorState title="주소가 잘못됐어요" message="매장 정보를 찾지 못했어요" />
         </PageBody>
       </>
     )
@@ -65,8 +65,7 @@ export function ReportPage() {
               <span className={styles.disclaimerIcon}>
                 <InfoIcon size={16} strokeWidth={2} />
               </span>
-              이 리포트는 운영 안정성을 참고하기 위한 보조지표입니다. 신용등급이나 대출 심사 결과가
-              아닙니다.
+              운영 상태를 참고하는 지표예요. 신용등급이나 대출 심사 결과는 아니에요.
             </p>
 
             <section className={styles.scoreBlock}>
@@ -101,11 +100,11 @@ export function ReportPage() {
               </div>
               <div className={styles.summaryRow}>
                 <span className={styles.summaryLabel}>위험도</span>
-                <span className={styles.summaryValue}>{risk ? risk.label : '—'}</span>
+                <span className={styles.summaryValue}>{risk ? risk.value : '—'}</span>
               </div>
               {role && (
                 <div className={styles.summaryRow}>
-                  <span className={styles.summaryLabel}>조회 권한</span>
+                  <span className={styles.summaryLabel}>권한</span>
                   <span className={styles.summaryValue}>{roleLabel(role)}</span>
                 </div>
               )}
@@ -117,7 +116,7 @@ export function ReportPage() {
                 <p className={styles.summaryText}>{data.summary.trim()}</p>
               ) : (
                 <p className={styles.emptyText}>
-                  아직 종합 의견을 낼 만큼 데이터가 모이지 않았습니다.
+                  종합 의견을 내려면 데이터가 더 필요해요
                 </p>
               )}
             </section>
@@ -135,7 +134,7 @@ export function ReportPage() {
                 </ol>
               ) : (
                 <p className={styles.emptyText}>
-                  제시할 근거가 없습니다. 영상과 매출 데이터를 업로드하면 근거가 함께 산출됩니다.
+                  아직 근거가 없어요. 영상이나 매출 파일을 올리면 함께 보여드려요.
                 </p>
               )}
             </section>
@@ -143,7 +142,7 @@ export function ReportPage() {
             <div className={styles.usageNotice}>
               <span className={styles.usageNoticeTitle}>이용 안내</span>
               {data.usageNotice?.trim() ||
-                '본 지표는 매장 운영 데이터를 기반으로 산출된 참고 자료입니다. 여신 심사, 신용평가 등 금융 의사결정의 단독 근거로 사용할 수 없습니다.'}
+                '매장 운영 데이터로 계산한 참고 자료예요. 대출 심사나 신용평가 같은 금융 결정에는 다른 자료와 함께 활용해 주세요.'}
             </div>
           </>
         )}
@@ -174,8 +173,8 @@ function ReportErrorState({
     return (
       <EmptyState
         icon={<DocumentIcon size={26} strokeWidth={1.8} />}
-        title="아직 리포트를 만들 수 없습니다"
-        description={apiError.message}
+        title="리포트를 만들려면 데이터가 필요해요"
+        description="매장 영상이나 매출 파일을 올리면 점수와 리포트를 만들어 드려요"
         action={
           <Button
             variant="brand"
@@ -183,7 +182,7 @@ function ReportErrorState({
             inline
             onClick={() => navigate(PATHS.storeDetail(storeId))}
           >
-            데이터 업로드하기
+            데이터 올리기
           </Button>
         }
       />
@@ -194,16 +193,16 @@ function ReportErrorState({
     return (
       <EmptyState
         icon={<AlertIcon size={26} strokeWidth={1.8} />}
-        title="매장을 찾을 수 없습니다"
-        description="삭제되었거나 접근 권한이 없는 매장입니다."
+        title="매장을 찾지 못했어요"
+        description="없어졌거나 볼 권한이 없는 매장이에요"
         action={
           <Button variant="secondary" size="md" inline onClick={() => navigate(PATHS.stores)}>
-            내 매장으로
+            내 매장으로 가기
           </Button>
         }
       />
     )
   }
 
-  return <ErrorState message={apiError.message} onRetry={onRetry} />
+  return <ErrorState title="리포트를 불러오지 못했어요" message={apiError.message} onRetry={onRetry} />
 }

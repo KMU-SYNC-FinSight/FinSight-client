@@ -39,7 +39,7 @@ export function SignupPage() {
     onSuccess: (res) => {
       // SignupResponse 에는 accessToken 이 없다. 자동 로그인이 불가능하므로
       // 로그인 화면으로 보내고 이메일만 채워 준다.
-      toast.show('회원가입이 완료되었습니다. 로그인해 주세요.')
+      toast.show('가입을 완료했어요. 로그인해 주세요.')
       navigate(PATHS.login, { replace: true, state: { email: res.email } })
     },
   })
@@ -53,7 +53,10 @@ export function SignupPage() {
     mutation.mutate({ name: name.trim(), email: email.trim(), password })
   }
 
-  const serverError = mutation.isError ? toApiError(mutation.error).message : null
+  const apiError = mutation.isError ? toApiError(mutation.error) : null
+  // 가입 충돌(409)은 이미 가입한 이메일이다. 서버 문구 대신 다음 행동을 알려 준다.
+  const serverError =
+    apiError?.status === 409 ? '이미 가입한 이메일이에요. 로그인해 주세요.' : (apiError?.message ?? null)
 
   return (
     <div className={styles.page}>
@@ -62,8 +65,7 @@ export function SignupPage() {
       <PageBody>
         <div className={styles.headlineArea}>
           <Headline
-            title={'매장 운영 데이터를\n분석해 드립니다.'}
-            description="소상공인 계정을 만들고 매장을 등록하세요."
+            title={'계정을 만들고\n매장 점수를 받아보세요'}
           />
         </div>
 
@@ -81,7 +83,7 @@ export function SignupPage() {
             label="이름"
             type="text"
             autoComplete="name"
-            placeholder="이서준"
+            placeholder="홍길동"
             value={name}
             error={nameError}
             counterMax={NAME_MAX}
@@ -99,7 +101,7 @@ export function SignupPage() {
             placeholder="owner@finsight.com"
             value={email}
             error={emailError}
-            hint="로그인에 사용할 이메일입니다."
+            hint="로그인할 때 사용해요"
             onChange={(e) => setEmail(e.target.value)}
           />
 
@@ -107,10 +109,10 @@ export function SignupPage() {
             label="비밀번호"
             type={passwordType}
             autoComplete="new-password"
-            placeholder={`${PASSWORD_MIN}~${PASSWORD_MAX}자`}
+            placeholder="비밀번호 입력"
             value={password}
             error={passwordError}
-            hint={`영문·숫자를 조합해 ${PASSWORD_MIN}~${PASSWORD_MAX}자로 입력하세요.`}
+            hint={`영문과 숫자를 섞어 ${PASSWORD_MIN}~${PASSWORD_MAX}자로 만들어 주세요`}
             suffix={toggle}
             maxLength={PASSWORD_MAX}
             onChange={(e) => setPassword(e.target.value)}
@@ -118,17 +120,17 @@ export function SignupPage() {
 
           <div className={styles.submitArea}>
             <Button type="submit" loading={mutation.isPending}>
-              가입하기
+              동의하고 가입하기
             </Button>
           </div>
         </form>
 
         <p className={styles.notice}>
-          가입 시 서비스 이용약관 및 개인정보 처리방침에 동의한 것으로 간주됩니다.
+          가입하면 서비스 이용약관과 개인정보 처리방침에 동의한 것으로 봐요
         </p>
 
         <p className={styles.altAction}>
-          이미 계정이 있으신가요?
+          이미 계정이 있나요?
           <Link to={PATHS.login} className={styles.altLink}>
             로그인
           </Link>

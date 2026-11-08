@@ -39,7 +39,7 @@ export function KakaoCallbackPage() {
       // 사용자가 카카오 동의 화면에서 취소했을 때도 여기로 온다 (error=access_denied 등).
       navigate(PATHS.login, {
         replace: true,
-        state: { authError: '카카오 로그인이 취소되었습니다.' },
+        state: { authError: '카카오 로그인을 취소했어요' },
       })
       return
     }
@@ -48,5 +48,5 @@ export function KakaoCallbackPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return <LoadingState label="카카오 계정으로 로그인하는 중" />
+  return <LoadingState label="카카오로 로그인하고 있어요" />
 }
