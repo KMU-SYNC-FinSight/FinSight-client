@@ -11,10 +11,10 @@ import styles from './UploadPanel.module.css'
 export function CsvResultCard({ result }: { result: SalesUploadResponse }) {
   const cells = [
     { label: '전체', value: result.totalRows, tone: 'default' as const },
-    { label: '신규 저장', value: result.insertedRows, tone: 'default' as const },
-    { label: '덮어씀', value: result.updatedRows, tone: 'default' as const },
+    { label: '새로 추가', value: result.insertedRows, tone: 'default' as const },
+    { label: '업데이트', value: result.updatedRows, tone: 'default' as const },
     {
-      label: '오류',
+      label: '제외',
       value: result.skippedRows,
       // 건너뛴 행이 있으면 눈에 걸리게 한다. 0 이면 회색으로 죽인다.
       tone: result.skippedRows > 0 ? ('warning' as const) : ('muted' as const),

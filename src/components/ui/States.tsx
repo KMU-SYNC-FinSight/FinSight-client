@@ -4,7 +4,7 @@ import { Button } from './Button'
 import styles from './States.module.css'
 
 /** 화면 전체를 채우는 로딩 표시. */
-export function LoadingState({ label = '불러오는 중' }: { label?: string }) {
+export function LoadingState({ label = '불러오고 있어요' }: { label?: string }) {
   return (
     <div className={styles.center} role="status" aria-live="polite">
       <span className={styles.spinner} aria-hidden="true" />
@@ -39,7 +39,7 @@ interface ErrorStateProps {
   onRetry?: () => void
 }
 
-export function ErrorState({ title = '불러오지 못했습니다', message, onRetry }: ErrorStateProps) {
+export function ErrorState({ title = '불러오지 못했어요', message, onRetry }: ErrorStateProps) {
   return (
     <div className={styles.center} role="alert">
       <span className={styles.iconWrap} data-tone="danger">
@@ -52,7 +52,7 @@ export function ErrorState({ title = '불러오지 못했습니다', message, on
       {onRetry && (
         <div className={styles.action}>
           <Button variant="secondary" size="md" inline onClick={onRetry}>
-            다시 시도
+            다시 불러오기
           </Button>
         </div>
       )}

@@ -57,7 +57,7 @@ export function FilePickField({
           <span className={styles.pickerTitle}>{file ? file.name : placeholder}</span>
           <span className={styles.pickerDesc}>{file ? formatFileSize(file.size) : hint}</span>
         </span>
-        {file && <span className={styles.pickerChange}>변경</span>}
+        {file && <span className={styles.pickerChange}>바꾸기</span>}
       </button>
     </>
   )
@@ -68,7 +68,7 @@ export function UploadProgress({ percent }: { percent: number }) {
   return (
     <div className={styles.progress}>
       <div className={styles.progressHead}>
-        <span>파일 전송 중</span>
+        <span>올리는 중</span>
         <span className="num">{percent}%</span>
       </div>
       <div

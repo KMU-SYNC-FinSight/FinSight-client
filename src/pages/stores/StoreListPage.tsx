@@ -59,12 +59,12 @@ export function StoreListPage() {
 
   const promoSlides: PromoSlide[] = [
     {
-      title: '이 점수, 어디에 쓰이나요?',
+      title: '점수는 어디에 쓰일까요?',
       desc: (
         <>
-          매장 데이터가 어떻게 지표가 되고
+          데이터가 점수가 되는 과정과
           <br />
-          금융기관이 어떻게 참고하는지 알려드려요
+          금융기관의 활용법을 알려드려요
         </>
       ),
       cta: '사용 방법 보기',
@@ -72,12 +72,12 @@ export function StoreListPage() {
       onClick: () => navigate(PATHS.guide),
     },
     {
-      title: '영상만 올려도 방문객이 보여요',
+      title: '영상만 있으면 돼요',
       desc: (
         <>
-          매장 내부 영상에서 방문객 수와
+          매장 영상으로 방문객 수와
           <br />
-          평균 체류 시간을 계산해 드려요
+          머문 시간을 알려드려요
         </>
       ),
       cta: hasStores ? '영상 올리러 가기' : '매장 등록하러 가기',
@@ -86,7 +86,7 @@ export function StoreListPage() {
         navigate(primaryStoreId ? PATHS.storeDetail(primaryStoreId) : PATHS.storeNew),
     },
     {
-      title: '금융기관용 리포트로 정리돼요',
+      title: '리포트로 정리해 드려요',
       desc: (
         <>
           점수와 근거를 한 장으로 묶어
@@ -116,13 +116,19 @@ export function StoreListPage() {
 
       {isPending && <StoreListSkeleton />}
 
-      {isError && <ErrorState message={toApiError(error).message} onRetry={() => refetch()} />}
+      {isError && (
+        <ErrorState
+          title="매장 목록을 불러오지 못했어요"
+          message={toApiError(error).message}
+          onRetry={() => refetch()}
+        />
+      )}
 
       {stores && stores.length === 0 && (
         <EmptyState
           icon={<StoreIcon size={26} strokeWidth={1.8} />}
-          title="등록된 매장이 없습니다"
-          description="매장을 등록하면 영상과 매출 데이터를 분석해 운영 안정성 점수를 계산합니다."
+          title="아직 등록한 매장이 없어요"
+          description="매장을 등록하고 영상과 매출을 올리면 운영 점수를 알려드려요"
           action={
             <Button variant="brand" size="md" inline onClick={goToCreate}>
               <PlusIcon size={18} strokeWidth={2} />첫 매장 등록하기
@@ -141,7 +147,7 @@ export function StoreListPage() {
           <div className={styles.createArea}>
             <Button variant="secondary" size="md" onClick={goToCreate}>
               <PlusIcon size={18} strokeWidth={2} />
-              매장 등록
+              매장 등록하기
             </Button>
           </div>
         </>
@@ -182,7 +188,7 @@ function SummaryStrip({
       </div>
       <span className={styles.summaryDivider} />
       <div className={styles.summaryItem}>
-        <dt className={styles.summaryLabel}>분석 대기</dt>
+        <dt className={styles.summaryLabel}>데이터 필요</dt>
         <dd className={`${styles.summaryValue} num`} data-tone={waiting > 0 ? 'attention' : 'calm'}>
           {formatNumber(waiting)}곳
         </dd>
@@ -234,7 +240,7 @@ function TodoRow({ store }: { store: StoreResponse }) {
       </span>
       <span className={styles.todoBody}>
         <span className={styles.todoTitle}>{store.name}</span>
-        <span className={styles.todoDesc}>영상·매출 데이터를 올리면 점수가 나와요</span>
+        <span className={styles.todoDesc}>데이터를 올리고 점수를 받아보세요</span>
       </span>
       <ChevronRightIcon size={18} strokeWidth={2} />
     </button>
@@ -249,7 +255,7 @@ function QuickMenu({ storeId }: { storeId: number | null }) {
   const items = [
     { label: '대시보드', icon: <ChartIcon size={20} strokeWidth={1.9} />, to: PATHS.dashboardOf(storeId) },
     { label: '리포트', icon: <DocumentIcon size={20} strokeWidth={1.9} />, to: PATHS.report(storeId) },
-    { label: '데이터 업로드', icon: <UploadIcon size={20} strokeWidth={1.9} />, to: PATHS.storeDetail(storeId) },
+    { label: '데이터 올리기', icon: <UploadIcon size={20} strokeWidth={1.9} />, to: PATHS.storeDetail(storeId) },
     { label: '사용 방법', icon: <InfoIcon size={20} strokeWidth={1.9} />, to: PATHS.guide },
   ]
 
@@ -433,7 +439,7 @@ function StoreCard({
   const meta =
     [
       store.address || null,
-      store.seatCount != null ? `좌석 ${formatNumber(store.seatCount)}석` : null,
+      store.seatCount != null ? `${formatNumber(store.seatCount)}석` : null,
       store.openedAt ? `${formatDate(store.openedAt)} 개업` : null,
     ]
       .filter(Boolean)
@@ -473,7 +479,7 @@ function StoreCard({
             </span>
           </>
         ) : (
-          <span className={styles.cardScoreEmpty}>데이터를 올리면 점수가 계산돼요</span>
+          <span className={styles.cardScoreEmpty}>데이터를 올리면 점수가 나와요</span>
         )}
       </div>
 
@@ -504,7 +510,7 @@ function StoreCard({
           data-variant="brand"
           onClick={() => open(PATHS.dashboardOf(store.storeId))}
         >
-          대시보드
+          대시보드 보기
         </button>
         <button
           type="button"
@@ -512,7 +518,7 @@ function StoreCard({
           data-variant="quiet"
           onClick={() => open(PATHS.storeDetail(store.storeId))}
         >
-          데이터 업로드
+          데이터 올리기
         </button>
       </div>
     </article>

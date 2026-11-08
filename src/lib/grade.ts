@@ -21,33 +21,33 @@ const GRADE_META: Record<string, GradeMeta> = {
     label: '매우 안정',
     color: 'var(--grade-very-stable)',
     bg: 'var(--positive-bg)',
-    caption: '운영 흐름이 매우 안정적으로 유지되고 있습니다.',
+    caption: '운영이 매우 안정적이에요',
   },
   STABLE: {
     label: '안정',
     color: 'var(--grade-stable)',
     bg: 'var(--info-bg)',
-    caption: '운영 지표가 안정 구간에 있습니다.',
+    caption: '운영이 안정적이에요',
   },
   CAUTION: {
     label: '주의',
     color: 'var(--grade-caution)',
     bg: 'var(--warning-bg)',
-    caption: '일부 지표에서 변동이 관찰됩니다.',
+    caption: '일부 지표가 흔들리고 있어요',
   },
   RISK: {
     label: '위험',
     color: 'var(--grade-risk)',
     bg: 'var(--danger-bg)',
-    caption: '운영 지표가 위험 구간에 있습니다.',
+    caption: '운영 지표가 위험 구간에 있어요',
   },
 }
 
 const UNKNOWN_GRADE: GradeMeta = {
-  label: '측정 중',
+  label: '측정 전',
   color: 'var(--grade-unknown)',
   bg: 'var(--neutral-bg)',
-  caption: '점수를 산출할 데이터가 아직 충분하지 않습니다.',
+  caption: '데이터가 더 필요해요',
 }
 
 export function gradeMeta(grade: Grade | null | undefined): GradeMeta {
@@ -62,18 +62,20 @@ export function gradeMeta(grade: Grade | null | undefined): GradeMeta {
 
 export interface RiskMeta {
   label: string
+  /** '위험도' 라벨 옆에 붙일 짧은 값 (리포트 표). label 과 겹쳐 읽히지 않게 한다. */
+  value: string
   tone: 'positive' | 'info' | 'warning' | 'danger' | 'neutral'
 }
 
 const RISK_META: Record<string, RiskMeta> = {
-  LOW: { label: '위험도 낮음', tone: 'positive' },
-  MEDIUM: { label: '위험도 보통', tone: 'warning' },
-  HIGH: { label: '위험도 높음', tone: 'danger' },
+  LOW: { label: '위험도 낮음', value: '낮음', tone: 'positive' },
+  MEDIUM: { label: '위험도 보통', value: '보통', tone: 'warning' },
+  HIGH: { label: '위험도 높음', value: '높음', tone: 'danger' },
 }
 
 export function riskMeta(risk: RiskLevel | null | undefined): RiskMeta | null {
   if (!risk) return null
-  return RISK_META[risk] ?? { label: `위험도 ${risk}`, tone: 'neutral' }
+  return RISK_META[risk] ?? { label: `위험도 ${risk}`, value: risk, tone: 'neutral' }
 }
 
 /* ───────────────────────── 점수 ───────────────────────── */

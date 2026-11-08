@@ -93,7 +93,7 @@ export interface ApiError {
   isNetworkError: boolean
 }
 
-const DEFAULT_MESSAGE = '요청을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.'
+const DEFAULT_MESSAGE = '요청을 처리하지 못했어요. 잠시 후 다시 시도해 주세요.'
 
 /**
  * 백엔드 에러 응답 스키마가 openapi.json 에 정의되어 있지 않다.
@@ -118,18 +118,40 @@ export function toApiError(error: unknown): ApiError {
       code: null,
       message:
         error.code === 'ECONNABORTED'
-          ? '요청 시간이 초과되었습니다. 네트워크 상태를 확인해 주세요.'
-          : '서버에 연결할 수 없습니다. 네트워크 상태를 확인해 주세요.',
+          ? '응답이 늦어지고 있어요. 인터넷 연결을 확인하고 다시 시도해 주세요.'
+          : '인터넷 연결을 확인하고 다시 시도해 주세요',
       isNetworkError: true,
     }
   }
 
+  const code = extractCode(error.response.data)
+
   return {
     status,
-    code: extractCode(error.response.data),
-    message: extractMessage(error.response.data) ?? messageForStatus(status),
+    code,
+    message: messageForCode(code) ?? extractMessage(error.response.data) ?? messageForStatus(status),
     isNetworkError: false,
   }
+}
+
+/**
+ * 아는 코드는 서버 문구 대신 클라이언트 문구를 쓴다.
+ * 서버 메시지는 '~습니다' 체라 화면 문구(해요체)와 톤이 섞이고, 다음 행동을 알려주지 않는 경우가 많다.
+ * 모르는 코드는 서버 문구를 그대로 보여준다.
+ */
+const CODE_MESSAGES: Partial<Record<string, string>> = {
+  [API_CODES.SCORE_NOT_READY]: '아직 점수를 계산할 데이터가 부족해요',
+  [API_CODES.STORE_NOT_FOUND]: '매장을 찾지 못했어요',
+  [API_CODES.UPLOAD_NOT_FOUND]: '올린 파일 기록을 찾지 못했어요',
+  [API_CODES.UNSUPPORTED_FILE_TYPE]:
+    '올릴 수 없는 파일 형식이에요. 영상은 mp4·mov, 매출은 CSV 파일로 올려 주세요.',
+  [API_CODES.INVALID_LOGIN_CREDENTIALS]: '이메일이나 비밀번호가 맞지 않아요',
+  [API_CODES.INVALID_TOKEN]: '로그인이 만료됐어요. 다시 로그인해 주세요.',
+  [API_CODES.UNAUTHORIZED]: '로그인이 필요해요',
+}
+
+function messageForCode(code: string | null): string | null {
+  return (code && CODE_MESSAGES[code]) || null
 }
 
 function extractCode(data: unknown): string | null {
@@ -175,22 +197,22 @@ function extractMessage(data: unknown): string | null {
 function messageForStatus(status: number | null): string {
   switch (status) {
     case 400:
-      return '입력한 내용을 다시 확인해 주세요.'
+      return '입력한 내용을 다시 확인해 주세요'
     case 401:
-      return '이메일 또는 비밀번호가 올바르지 않습니다.'
+      return '이메일이나 비밀번호가 맞지 않아요'
     case 403:
-      return '접근 권한이 없습니다.'
+      return '볼 수 있는 권한이 없어요'
     case 404:
-      return '요청한 정보를 찾을 수 없습니다.'
+      return '요청한 정보를 찾지 못했어요'
     case 409:
-      return '이미 등록된 정보입니다.'
+      return '이미 등록된 정보예요'
     case 413:
-      return '파일 용량이 너무 큽니다.'
+      return '파일이 너무 커요. 용량을 줄여서 다시 올려 주세요.'
     case 415:
-      return '지원하지 않는 파일 형식입니다.'
+      return '올릴 수 없는 파일 형식이에요'
     default:
       if (status !== null && status >= 500) {
-        return '서버에 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.'
+        return '일시적인 문제가 생겼어요. 잠시 후 다시 시도해 주세요.'
       }
       return DEFAULT_MESSAGE
   }

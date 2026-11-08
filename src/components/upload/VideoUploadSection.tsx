@@ -46,7 +46,7 @@ export function VideoUploadSection({ storeId }: { storeId: number }) {
   const handleSelect = (selected: File | null) => {
     setSizeError(null)
     if (selected && selected.size > MAX_VIDEO_BYTES) {
-      setSizeError('영상 파일은 500MB 이하만 업로드할 수 있습니다.')
+      setSizeError('500MB까지 올릴 수 있어요. 영상을 짧게 나눠서 올려 주세요.')
       setFile(null)
       return
     }
@@ -86,7 +86,7 @@ export function VideoUploadSection({ storeId }: { storeId: number }) {
             accept="video/*"
             icon={<VideoIcon size={20} strokeWidth={1.8} />}
             placeholder="영상 파일 선택"
-            hint="mp4, mov 등 · 최대 500MB"
+            hint="mp4, mov · 500MB까지"
             file={file}
             onSelect={handleSelect}
             disabled={isTransferring}
@@ -125,7 +125,7 @@ export function VideoUploadSection({ storeId }: { storeId: number }) {
               if (file && canSubmit) mutation.mutate({ file, recordedAt })
             }}
           >
-            업로드하고 분석 시작
+            영상 올리고 분석하기
           </Button>
         </>
       )}
@@ -135,7 +135,7 @@ export function VideoUploadSection({ storeId }: { storeId: number }) {
           <div className={styles.statusCard}>
             <div className={styles.statusHead}>
               <span className={styles.statusFile}>
-                {polling.data?.originalFileName ?? file?.name ?? '업로드한 영상'}
+                {polling.data?.originalFileName ?? file?.name ?? '올린 영상'}
               </span>
             </div>
             <UploadStepper
@@ -143,18 +143,18 @@ export function VideoUploadSection({ storeId }: { storeId: number }) {
               isFailed={polling.isFailed}
               isTimedOut={polling.isTimedOut}
               errorMessage={polling.errorMessage}
+              stalledMessage="분석이 늦어지고 있어요. 잠시 후에도 그대로면 mp4 영상으로 다시 올려 주세요."
             />
           </div>
 
           {(polling.isCompleted || polling.isFailed || polling.isTimedOut) && (
             <Button variant="secondary" size="md" onClick={reset}>
-              다른 영상 업로드
+              다른 영상 올리기
             </Button>
           )}
 
           <p className={styles.caption}>
-            분석 상태는 이 화면에서만 추적합니다. 새로고침하면 진행 표시가 사라지지만 서버의 분석은
-            계속 진행됩니다.
+            새로고침하면 진행 표시는 사라지지만, 분석은 계속돼요
           </p>
         </>
       )}

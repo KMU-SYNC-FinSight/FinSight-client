@@ -40,8 +40,8 @@ export function VideoPreview({ file }: { file: File }) {
         <span className={styles.previewFallbackIcon}>
           <AlertIcon size={16} strokeWidth={2} />
         </span>
-        이 브라우저에서 미리 볼 수 없는 형식입니다. 업로드는 그대로 할 수 있지만, 분석이 되지 않을
-        수 있으니 mp4 파일을 권장합니다.
+        이 브라우저에서는 미리 볼 수 없는 영상이에요. 그대로 올려도 되지만, 분석이 안 되면 mp4로
+        바꿔서 올려 주세요.
       </p>
     )
   }
@@ -68,7 +68,7 @@ export function VideoPreview({ file }: { file: File }) {
         onError={() => setFailed(true)}
       />
       <div className={styles.previewMeta}>
-        <span>업로드 전 미리보기 · 아직 전송되지 않았습니다</span>
+        <span>미리보기 · 아직 올리지 않았어요</span>
         {meta && meta.width > 0 && (
           <span className="num">
             {meta.duration > 0 && `${formatDuration(meta.duration)} · `}

@@ -46,9 +46,15 @@ export function MyPage() {
       <TopBar title="내 정보" bordered />
 
       <PageBody>
-        {isPending && <LoadingState label="내 정보를 불러오는 중" />}
+        {isPending && <LoadingState label="내 정보를 불러오고 있어요" />}
 
-        {isError && <ErrorState message={toApiError(error).message} onRetry={() => refetch()} />}
+        {isError && (
+          <ErrorState
+            title="내 정보를 불러오지 못했어요"
+            message={toApiError(error).message}
+            onRetry={() => refetch()}
+          />
+        )}
 
         {me && (
           <>
@@ -93,7 +99,7 @@ export function MyPage() {
               <ListRow
                 icon={<InfoIcon size={19} strokeWidth={1.8} />}
                 title="사용 방법"
-                description="점수가 만들어지는 과정과 활용처"
+                description="점수를 만드는 방법과 쓰이는 곳"
                 to={PATHS.guide}
               />
             </nav>

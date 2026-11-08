@@ -44,7 +44,7 @@ export function StoreCreatePage() {
   const [touched, setTouched] = useState(false)
 
   const nameError = touched ? validateStoreName(name) : null
-  const typeError = touched && !businessType ? '업종을 선택해 주세요.' : null
+  const typeError = touched && !businessType ? '업종을 선택해 주세요' : null
   const addressError = touched ? validateAddress(address) : null
   const seatError = touched ? validateSeatCount(seatCount) : null
   const openedAtError = touched ? validateOpenedAt(openedAt) : null
@@ -57,7 +57,7 @@ export function StoreCreatePage() {
     onSuccess: async (store) => {
       selectStore(store.storeId)
       await queryClient.invalidateQueries({ queryKey: queryKeys.stores })
-      toast.show('매장이 등록되었습니다.')
+      toast.show('매장을 등록했어요')
       // 등록 직후에는 업로드가 다음 할 일이므로 상세로 보낸다.
       navigate(PATHS.storeDetail(store.storeId), { replace: true })
     },
@@ -97,8 +97,8 @@ export function StoreCreatePage() {
         <PageBody hasFooter>
           <div className={styles.inner}>
             <Headline
-              title={'매장 정보를\n알려주세요.'}
-              description="이름과 업종만 있으면 등록할 수 있습니다."
+              title={'매장 정보를\n알려 주세요'}
+              description="이름과 업종만 있으면 바로 등록할 수 있어요"
             />
 
             {serverError && (
@@ -131,34 +131,32 @@ export function StoreCreatePage() {
               />
 
               <TextField
-                label="주소"
+                label="주소 (선택)"
                 type="text"
                 placeholder="서울특별시 성북구"
                 value={address}
                 error={addressError}
-                hint="선택 항목입니다."
                 maxLength={ADDRESS_MAX}
                 onChange={(e) => setAddress(e.target.value)}
               />
 
               <TextField
-                label="좌석 수"
+                label="좌석 수 (선택)"
                 type="number"
                 inputMode="numeric"
                 min={0}
                 placeholder="24"
                 value={seatCount}
                 error={seatError}
-                hint="선택 항목입니다. 방문객 밀집도 계산에 사용됩니다."
+                hint="혼잡도를 계산할 때 써요"
                 onChange={(e) => setSeatCount(e.target.value)}
               />
 
               <TextField
-                label="개업일"
+                label="개업일 (선택)"
                 type="date"
                 value={openedAt}
                 error={openedAtError}
-                hint="선택 항목입니다."
                 onChange={(e) => setOpenedAt(e.target.value)}
               />
             </div>

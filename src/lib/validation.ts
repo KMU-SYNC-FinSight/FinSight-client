@@ -18,55 +18,55 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export function validateEmail(value: string): string | null {
   const email = value.trim()
-  if (!email) return '이메일을 입력해 주세요.'
-  if (!EMAIL_RE.test(email)) return '이메일 형식이 올바르지 않습니다.'
+  if (!email) return '이메일을 입력해 주세요'
+  if (!EMAIL_RE.test(email)) return '이메일 형식을 확인해 주세요'
   return null
 }
 
 export function validatePassword(value: string): string | null {
-  if (!value) return '비밀번호를 입력해 주세요.'
-  if (value.length < PASSWORD_MIN) return `비밀번호는 ${PASSWORD_MIN}자 이상이어야 합니다.`
-  if (value.length > PASSWORD_MAX) return `비밀번호는 ${PASSWORD_MAX}자 이하여야 합니다.`
+  if (!value) return '비밀번호를 입력해 주세요'
+  if (value.length < PASSWORD_MIN) return `${PASSWORD_MIN}자 이상 입력해 주세요`
+  if (value.length > PASSWORD_MAX) return `비밀번호는 ${PASSWORD_MAX}자까지 입력할 수 있어요`
   return null
 }
 
 /** 로그인은 길이 제약이 명세에 없다. 빈 값만 막는다. */
 export function validateLoginPassword(value: string): string | null {
-  if (!value) return '비밀번호를 입력해 주세요.'
+  if (!value) return '비밀번호를 입력해 주세요'
   return null
 }
 
 export function validateName(value: string): string | null {
   const name = value.trim()
-  if (!name) return '이름을 입력해 주세요.'
-  if (name.length > NAME_MAX) return `이름은 ${NAME_MAX}자 이하여야 합니다.`
+  if (!name) return '이름을 입력해 주세요'
+  if (name.length > NAME_MAX) return `이름은 ${NAME_MAX}자까지 입력할 수 있어요`
   return null
 }
 
 export function validateStoreName(value: string): string | null {
   const name = value.trim()
-  if (!name) return '매장 이름을 입력해 주세요.'
-  if (name.length > STORE_NAME_MAX) return `매장 이름은 ${STORE_NAME_MAX}자 이하여야 합니다.`
+  if (!name) return '매장 이름을 입력해 주세요'
+  if (name.length > STORE_NAME_MAX) return `매장 이름은 ${STORE_NAME_MAX}자까지 입력할 수 있어요`
   return null
 }
 
 export function validateAddress(value: string): string | null {
-  if (value.length > ADDRESS_MAX) return `주소는 ${ADDRESS_MAX}자 이하여야 합니다.`
+  if (value.length > ADDRESS_MAX) return `주소는 ${ADDRESS_MAX}자까지 입력할 수 있어요`
   return null
 }
 
 export function validateSeatCount(value: string): string | null {
   if (!value.trim()) return null // 선택 항목
   const num = Number(value)
-  if (!Number.isInteger(num) || num < 0) return '좌석 수는 0 이상의 정수로 입력해 주세요.'
-  if (num > 10_000) return '좌석 수를 다시 확인해 주세요.'
+  if (!Number.isInteger(num) || num < 0) return '0 이상의 숫자로 입력해 주세요'
+  if (num > 10_000) return '좌석 수를 다시 확인해 주세요'
   return null
 }
 
 export function validateOpenedAt(value: string): string | null {
   if (!value) return null // 선택 항목
   const date = new Date(value)
-  if (Number.isNaN(date.getTime())) return '개업일 형식이 올바르지 않습니다.'
+  if (Number.isNaN(date.getTime())) return '개업일 형식을 확인해 주세요'
   return null
 }
 
@@ -76,10 +76,10 @@ export function validateOpenedAt(value: string): string | null {
  * 잘못 고른 날짜가 지표에 섞이기 전에 여기서 걸러낸다.
  */
 export function validateRecordedAt(value: string): string | null {
-  if (!value) return '영상 촬영 일시를 입력해 주세요.'
+  if (!value) return '촬영 날짜와 시간을 골라 주세요'
   const date = new Date(value)
-  if (Number.isNaN(date.getTime())) return '촬영 일시 형식이 올바르지 않습니다.'
+  if (Number.isNaN(date.getTime())) return '촬영 날짜와 시간을 다시 확인해 주세요'
   // 기기 시계 오차를 감안해 1분은 허용한다.
-  if (date.getTime() > Date.now() + 60_000) return '촬영 일시가 현재보다 미래입니다.'
+  if (date.getTime() > Date.now() + 60_000) return '지금까지의 시간만 고를 수 있어요'
   return null
 }

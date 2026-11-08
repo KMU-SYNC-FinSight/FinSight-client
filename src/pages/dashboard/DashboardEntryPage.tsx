@@ -28,7 +28,7 @@ export function DashboardEntryPage() {
   if (isPending) {
     return (
       <>
-        <TopBar title="운영 대시보드" bordered />
+        <TopBar title="대시보드" bordered />
         <PageBody>
           <LoadingState />
         </PageBody>
@@ -44,15 +44,15 @@ export function DashboardEntryPage() {
 
   return (
     <>
-      <TopBar title="운영 대시보드" bordered />
+      <TopBar title="대시보드" bordered />
       <PageBody>
         <EmptyState
           icon={<ChartIcon size={26} strokeWidth={1.8} />}
           title={hasStores ? '어떤 매장을 볼까요?' : '먼저 매장을 등록해 주세요'}
           description={
             hasStores
-              ? '매장 목록에서 대시보드를 볼 매장을 선택하세요.'
-              : '매장을 등록하고 영상·매출 데이터를 올리면 운영 안정성 점수를 계산합니다.'
+              ? '내 매장 중 하나를 골라 주세요'
+              : '매장을 등록하고 데이터를 올리면 운영 점수를 알려드려요'
           }
           action={
             <Button
@@ -61,7 +61,7 @@ export function DashboardEntryPage() {
               inline
               onClick={() => navigate(hasStores ? PATHS.stores : PATHS.storeNew)}
             >
-              {hasStores ? '매장 선택하기' : '매장 등록하기'}
+              {hasStores ? '매장 고르기' : '매장 등록하기'}
             </Button>
           }
         />

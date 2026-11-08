@@ -17,8 +17,8 @@ export function NotFoundPage() {
       <PageBody>
         <EmptyState
           icon={<AlertIcon size={26} strokeWidth={1.8} />}
-          title="페이지를 찾을 수 없습니다"
-          description="주소가 바뀌었거나 삭제된 화면입니다."
+          title="페이지를 찾지 못했어요"
+          description="주소가 바뀌었거나 없어진 화면이에요"
           action={
             <Button
               variant="secondary"
@@ -26,7 +26,7 @@ export function NotFoundPage() {
               inline
               onClick={() => navigate(session ? PATHS.stores : PATHS.login, { replace: true })}
             >
-              {session ? '내 매장으로' : '로그인으로'}
+              {session ? '내 매장으로 가기' : '로그인하러 가기'}
             </Button>
           }
         />

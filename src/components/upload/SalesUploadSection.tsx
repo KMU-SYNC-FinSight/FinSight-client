@@ -42,7 +42,7 @@ export function SalesUploadSection({ storeId }: { storeId: number }) {
   const handleSelect = (selected: File | null) => {
     setSizeError(null)
     if (selected && selected.size > MAX_CSV_BYTES) {
-      setSizeError('CSV 파일은 20MB 이하만 업로드할 수 있습니다.')
+      setSizeError('20MB까지 올릴 수 있어요. 기간을 나눠서 올려 주세요.')
       setFile(null)
       return
     }
@@ -66,8 +66,8 @@ export function SalesUploadSection({ storeId }: { storeId: number }) {
           <FilePickField
             accept=".csv,text/csv"
             icon={<TableIcon size={20} strokeWidth={1.8} />}
-            placeholder="매출 CSV 파일 선택"
-            hint="같은 날짜 데이터는 최신 값으로 덮어씁니다 · 최대 20MB"
+            placeholder="CSV 파일 선택"
+            hint="같은 날짜는 새 값으로 바뀌어요 · 20MB까지"
             file={file}
             onSelect={handleSelect}
             disabled={isTransferring}
@@ -90,7 +90,7 @@ export function SalesUploadSection({ storeId }: { storeId: number }) {
             loading={isTransferring}
             onClick={() => file && mutation.mutate(file)}
           >
-            업로드
+            매출 파일 올리기
           </Button>
         </>
       )}
@@ -100,7 +100,7 @@ export function SalesUploadSection({ storeId }: { storeId: number }) {
           <div className={styles.statusCard}>
             <div className={styles.statusHead}>
               <span className={styles.statusFile}>
-                {polling.data?.originalFileName ?? file?.name ?? '업로드한 CSV'}
+                {polling.data?.originalFileName ?? file?.name ?? '올린 CSV'}
               </span>
             </div>
 
@@ -120,12 +120,12 @@ export function SalesUploadSection({ storeId }: { storeId: number }) {
               <span className={styles.errorIcon}>
                 <AlertIcon size={16} strokeWidth={2} />
               </span>
-              {result.skippedRows}개 행을 처리하지 못했습니다. 날짜·금액 형식을 확인해 주세요.
+              {result.skippedRows}개 행은 형식이 맞지 않아 제외했어요. 날짜와 금액을 확인해 주세요.
             </p>
           )}
 
           <Button variant="secondary" size="md" onClick={reset}>
-            다른 CSV 업로드
+            다른 파일 올리기
           </Button>
         </>
       )}

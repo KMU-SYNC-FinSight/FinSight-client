@@ -56,7 +56,7 @@ export function RecordedAtField({
 
   return (
     <div className={styles.when}>
-      <p className={styles.whenLabel}>촬영 일시</p>
+      <p className={styles.whenLabel}>촬영 날짜와 시간</p>
 
       <div className={styles.whenCard} data-invalid={Boolean(error)} data-disabled={disabled}>
         <div className={styles.whenRow}>
@@ -90,7 +90,7 @@ export function RecordedAtField({
 
         <div className={styles.whenRow}>
           <label className={styles.whenRowLabel} htmlFor={hourId}>
-            시각
+            시간
           </label>
           <span className={styles.whenValue} data-empty={hour === null} aria-hidden="true">
             {hour === null ? '선택' : `${hour}시`}
@@ -106,7 +106,7 @@ export function RecordedAtField({
             onChange={(e) => handleHour(e.target.value)}
           >
             <option value="" disabled>
-              시각 선택
+              시간 선택
             </option>
             {Array.from({ length: maxHour + 1 }, (_, h) => (
               <option key={h} value={h}>
@@ -123,8 +123,7 @@ export function RecordedAtField({
         </p>
       ) : (
         <p className={styles.whenHint}>
-          1시간 단위로 입력합니다. 파일 정보에서 채운 값이니 실제 촬영 시각과 다르면 눌러서 고쳐
-          주세요.
+          파일 정보로 미리 채웠어요. 실제로 찍은 시간과 다르면 고쳐 주세요.
         </p>
       )}
     </div>

@@ -48,17 +48,17 @@ const STEPS = [
   {
     icon: <UploadIcon size={19} strokeWidth={1.9} />,
     title: '매장 데이터를 올려요',
-    desc: '매장 내부 영상과 일자별 매출 CSV를 업로드합니다.',
+    desc: '매장 안을 찍은 영상과 날짜별 매출 CSV를 올려요',
   },
   {
     icon: <ChartIcon size={19} strokeWidth={1.9} />,
     title: '방문객과 매출을 분석해요',
-    desc: '영상에서 방문객 수·체류 시간을, CSV에서 매출 흐름을 계산합니다.',
+    desc: '영상으로 방문객 수와 머문 시간을, CSV로 매출 흐름을 계산해요',
   },
   {
     icon: <DocumentIcon size={19} strokeWidth={1.9} />,
     title: '점수와 근거가 나와요',
-    desc: '운영 안정성 점수와 그렇게 나온 이유를 함께 보여드립니다.',
+    desc: '운영 점수와 그 이유를 함께 보여드려요',
   },
 ]
 
@@ -91,8 +91,8 @@ export function GuidePage() {
       <PageBody flush hasFooter>
         <section className={styles.hero}>
           <div className={styles.heroText}>
-            <h2 className={styles.heroTitle}>{'매장 운영 데이터가\n금융기관의 참고 자료가 됩니다'}</h2>
-            <p className={styles.heroSub}>매출과 방문 흐름을 하나의 지표로 정리해 드려요</p>
+            <h2 className={styles.heroTitle}>{'매장 운영 데이터가\n금융기관의 참고 자료가 돼요'}</h2>
+            <p className={styles.heroSub}>매출과 방문객 흐름을 점수 하나로 정리해 드려요</p>
           </div>
 
           {/*
@@ -117,8 +117,8 @@ export function GuidePage() {
             <span className={styles.sectionKicker}>사장님</span>
             <h3 className={styles.sectionTitle}>{'점수를 보면서\n매장을 관리해요'}</h3>
             <p className={styles.sectionDesc}>
-              데이터를 올릴 때마다 운영 안정성 점수가 갱신됩니다. 방문객이 줄었는지, 매출 흐름이
-              흔들리는지 숫자로 확인하고 대응할 수 있어요.
+              데이터를 올릴 때마다 점수를 새로 계산해요. 방문객이 줄었는지, 매출이 흔들리는지
+              숫자로 바로 확인할 수 있어요.
             </p>
           </section>
         </Reveal>
@@ -126,17 +126,17 @@ export function GuidePage() {
         <Reveal>
           <section className={styles.section}>
             <span className={styles.sectionKicker}>금융기관</span>
-            <h3 className={styles.sectionTitle}>{'재무제표 밖의\n운영 상태를 봅니다'}</h3>
+            <h3 className={styles.sectionTitle}>{'재무제표 밖의\n운영 상태를 봐요'}</h3>
             <p className={styles.sectionDesc}>
-              매장이 실제로 어떻게 돌아가는지는 서류만으로 알기 어렵습니다. 현장 데이터로 만든
-              보조지표가 그 공백을 메웁니다.
+              매장이 실제로 어떻게 돌아가는지는 서류만으로 알기 어려워요. 매장 데이터로 만든 점수가
+              그 빈자리를 채워요.
             </p>
           </section>
         </Reveal>
 
         <Reveal>
           <section className={styles.section}>
-            <h3 className={styles.sectionTitle}>어떻게 만들어지나요?</h3>
+            <h3 className={styles.sectionTitle}>점수는 이렇게 만들어요</h3>
             <ol className={styles.steps}>
               {/* Reveal 은 div 를 그리므로 ol 의 직계 자식이 되면 안 된다 (li 만 허용).
                   li 안쪽에 두고 스텝 스타일을 그 아래 div 로 옮겼다. */}
@@ -163,8 +163,8 @@ export function GuidePage() {
             <span className={styles.noticeIcon}>
               <InfoIcon size={16} strokeWidth={2} />
             </span>
-            FinSight 점수는 운영 상태를 참고하기 위한 보조지표입니다. 신용등급이나 대출 심사 결과가
-            아니며, 표시된 기관 유형은 활용 예시로 실제 제휴를 뜻하지 않습니다.
+            FinSight 점수는 운영 상태를 참고하는 지표예요. 신용등급이나 대출 심사 결과는 아니에요. 위
+            기관 유형은 활용 예시이고, 실제 제휴 기관은 아니에요.
           </p>
         </Reveal>
       </PageBody>
@@ -175,7 +175,7 @@ export function GuidePage() {
           onClick={() => navigate(hasStores ? PATHS.stores : PATHS.storeNew)}
         >
           <TrendIcon size={18} strokeWidth={2} />
-          {hasStores ? '내 매장 점수 확인하기' : '매장 등록하고 시작하기'}
+          {hasStores ? '내 매장 점수 보기' : '매장 등록하고 시작하기'}
         </Button>
       </PageFooter>
     </div>
